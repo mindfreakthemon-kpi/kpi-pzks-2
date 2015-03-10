@@ -1,0 +1,92 @@
+#paper {
+	height: 700px;
+	z-index: 1;
+	margin: 40px 0;
+	border: 1px solid #eee;
+}
+
+#editor {
+	width: 300px;
+	min-height: 100px;
+	position: absolute;
+	background: #5affcc;
+	top: 20px;
+	right: 0;
+	z-index: 2;
+	display: none;
+	padding: 10px 0 0;
+
+	&.shown {
+		display: block;
+	}
+
+	.close {
+		position: absolute;
+		z-index: 3;
+		top: 5px;
+		right: 5px;
+	}
+
+	.edit {
+		display: none;
+	}
+
+	&.edit-link {
+		.link {
+			display: block;
+		}
+	}
+
+	&.edit-entity {
+		.entity {
+			display: block;
+		}
+	}
+}
+
+#top-utils {
+	position: absolute;
+	top: 0;
+	left: 20px;
+	background: #807752;
+	width: 100%;
+	padding: 10px;
+	text-align: center;
+
+	.btn-group {
+		margin: 0 10px;
+	}
+}
+
+#load {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	opacity: 0;
+	width: 100%;
+}
+
+.link-tools,
+.marker-arrowheads {
+	display: none;
+}
+
+.type-system {
+	.marker-target,
+	.marker-source {
+		display: none;
+	}
+}
+
+svg {
+	height: 100%;
+}
+
+/*.mode-link {*/
+	/*.link-tools,*/
+	/*.marker-arrowheads {*/
+		/*display: block;*/
+	/*}*/
+/*}*/
