@@ -25,7 +25,6 @@ define(['jquery', 'canvasi', 'type', 'storage'], function ($, canvasi, type, sto
 		reader.onload = function () {
 			try {
 				var json = JSON.parse(reader.result);
-				console.log(json);
 
 				storage.saveAll(json);
 

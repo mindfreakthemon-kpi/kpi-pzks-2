@@ -1,5 +1,4 @@
 define(['joint'], function (joint) {
-
 	joint.shapes.ns = {};
 
 	joint.shapes.ns.Entity = joint.dia.Element.extend({
@@ -86,4 +85,6 @@ define(['joint'], function (joint) {
 			type: 'ns.Link'
 		})
 	});
+
+	return joint;
 });

@@ -1,4 +1,4 @@
-define(['jquery', 'canvasi', 'mode'], function ($, canvasi, mode) {
+define(['jquery', 'canvasi', 'toggles/mode'], function ($, canvasi, mode) {
 	var ns = joint.shapes.ns,
 		$editor = $('#editor'),
 		$editorForm = $('#editor-form'),

@@ -1,4 +1,4 @@
-define(['jquery', 'joint', 'mode', 'type', 'storage', 'shapes'], function ($, joint, mode, type, storage) {
+define(['jquery', 'joint', 'toggles/mode', 'toggles/type', 'storage', 'shapes'], function ($, joint, mode, type, storage) {
 	var exports,
 		saveTimeout,
 		graph = new joint.dia.Graph(),

@@ -1,9 +1,7 @@
-define(['jquery', 'joint', 'canvasi', 'type', 'underscore', 'scc'], function ($, joint, canvasi, type, _, scc) {
+define(['jquery', 'joint', 'canvasi', 'toggles/type', 'underscore'], function ($, joint, canvasi, type, _) {
 	var $check = $('#check');
 
 	function checkTask(elements) {
-
-
 		function _curses(element) {
 			var links = canvasi.graph.getConnectedLinks(element, {
 				outbound: true

@@ -1,6 +1,8 @@
 define([], function () {
 
 	return {
+		types: ['task', 'system'],
+
 		save: function saveStorage(json, type) {
 			localStorage.setItem('graph.' + type, JSON.stringify(json));
 		},
@@ -16,15 +18,19 @@ define([], function () {
 		},
 
 		loadAll: function () {
-			return {
-				task: this.load('task'),
-				system: this.load('system')
-			};
+			var data = {};
+
+			this.types.forEach(function (type) {
+				data[type] = this.load(type);
+			}, this);
+
+			return data;
 		},
 
 		saveAll: function (data) {
-			this.save(data.task, 'task');
-			this.save(data.system, 'system');
+			this.types.forEach(function (type) {
+				this.save(data[type], type);
+			}, this);
 		}
 	};
 });

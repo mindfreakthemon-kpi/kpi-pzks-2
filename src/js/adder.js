@@ -1,4 +1,4 @@
-define(['jquery', 'canvasi', 'mode', 'underscore', 'shapes'], function ($, canvasi, mode, _) {
+define(['jquery', 'canvasi', 'toggles/mode', 'underscore'], function ($, canvasi, mode, _) {
 	var ns = joint.shapes.ns;
 
 	function element(elm, x, y) {

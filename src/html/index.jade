@@ -23,10 +23,14 @@ body
 		#type.btn-group(data-toggle='buttons')
 			label.btn.btn-default.active
 				input(type='radio', name='type', autocomplete='off', value='task', checked)
-				| Task graph
+				| Task
 			label.btn.btn-default
 				input(type='radio', name='type', autocomplete='off', value='system')
-				| System graph
+				| System
+		#algo.btn-group
+			button.btn.btn-primary(type='button', data-algo='2') 2
+			button.btn.btn-primary(type='button', data-algo='9') 9
+			button.btn.btn-primary(type='button', data-algo='11') 11
 		.btn-group
 			button.btn.btn-primary#check(type='button') Check
 		.btn-group
