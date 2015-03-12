@@ -1,4 +1,4 @@
-define(['jquery', 'canvasi', 'type', 'storage'], function ($, canvasi, type, storage) {
+define(['jquery', 'canvasi', 'toggles/type', 'storage'], function ($, canvasi, type, storage) {
 	var $save = $('#save'),
 		$load = $('#load');
 

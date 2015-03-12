@@ -114,9 +114,20 @@ define(['canvasi', 'underscore'], function (canvasi, _) {
 			rec.Pr = rec.Nkrk / Nkrgrk + rec.Tkrk / Tkrgrk;
 			rec.S = canvasi.graph.getConnectedLinks(rec.element).length;
 			rec.E = canvasi.graph.getConnectedLinks(rec.element, { outbound: true }).length;
+			rec.I = canvasi.graph.getConnectedLinks(rec.element, { inbound: true }).length;
 			rec.W = +rec.element.getDescr();
 		});
 
-		return data;
+		var Sgr = Math.max.apply(Math, _.pluck(data, 'S'));
+
+
+		return {
+			list: data,
+			Nkrgrk: Nkrgrk,
+			Tkrgrk: Tkrgrk,
+			Nkrgrn: Nkrgrn,
+			Tkrgrn: Tkrgrn,
+			Sgr: Sgr
+		};
 	};
 });
