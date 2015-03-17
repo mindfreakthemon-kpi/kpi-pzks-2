@@ -38,6 +38,7 @@ require({
 			'adder',
 			'linker',
 			'checker',
+			'generate',
 			'algo',
 			'fs'
 		]

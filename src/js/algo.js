@@ -2,6 +2,11 @@ define(['counter', 'underscore'], function (counter, _) {
 	var $algo = $('#algo');
 
 	var algos = {
+		1: function (data) {
+			return _.map(_.sortBy(data.list, 'Pr').reverse(), function (rec) {
+				return rec.element.getTitle() + ' (' + rec.Pr.toFixed(2) + ')';
+			}).join(', ');
+		},
 		2: function (data) {
 			return _.map(_.sortBy(data.list, 'Luft'), function (rec) {
 				return rec.element.getTitle() + ' (' + rec.Luft + ')';
@@ -19,11 +24,23 @@ define(['counter', 'underscore'], function (counter, _) {
 				return rec.element.getTitle() + ' (' + rec.Nkrn + ')';
 			}).join(', ');
 		},
+		10: function (data) {
+			return _.map(_.sortBy(data.list, function (rec) {
+				return rec.S + '_' + rec.Nkrk;
+			}).reverse(), function (rec) {
+				return rec.element.getTitle() + ' (' + rec.S + '; ' + rec.Nkrk + ')';
+			}).join(', ');
+		},
 		11: function (data) {
 			return _.map(_.sortBy(data.list, function (rec) {
 				return rec.S + '_' + (data.Nkrgrn - rec.Nkrn);
 			}).reverse(), function (rec) {
 				return rec.element.getTitle() + ' (' + rec.S + '; ' + rec.Nkrn + ')';
+			}).join(', ');
+		},
+		16: function (data) {
+			return _.map(_.sortBy(data.list, 'Tkrn'), function (rec) {
+				return rec.element.getTitle() + ' (' + rec.Tkrn + ')';
 			}).join(', ');
 		},
 		17: function (data) {

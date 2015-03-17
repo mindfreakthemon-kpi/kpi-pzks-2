@@ -28,13 +28,18 @@ body
 				input(type='radio', name='type', autocomplete='off', value='system')
 				| System
 		#algo.btn-group
+			button.btn.btn-primary(type='button', data-algo='1') 1
 			button.btn.btn-primary(type='button', data-algo='2') 2
 			button.btn.btn-primary(type='button', data-algo='7') 7
 			button.btn.btn-primary(type='button', data-algo='9') 9
+			button.btn.btn-primary(type='button', data-algo='10') 10
 			button.btn.btn-primary(type='button', data-algo='11') 11
+			button.btn.btn-primary(type='button', data-algo='16') 16
 			button.btn.btn-primary(type='button', data-algo='17') 17
 		.btn-group
 			button.btn.btn-primary#check(type='button') Check
+		.btn-group
+			button.btn.btn-info#generate(type='button') Generate
 		.btn-group
 			button.btn.btn-success#save(type='button') Save
 		.btn-group(style='position: relative;')
