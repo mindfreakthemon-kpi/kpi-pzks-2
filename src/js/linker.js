@@ -63,7 +63,7 @@ define(['jquery', 'canvasi', 'toggles/mode', 'underscore'], function ($, canvasi
 					rect: { fill: 'white' },
 					text: { fill: 'blue', text: '1' }
 				}
-			})
+			});
 		}
 	}
 

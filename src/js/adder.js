@@ -42,4 +42,8 @@ define(['jquery', 'canvasi', 'toggles/mode', 'underscore'], function ($, canvasi
 			canvasi.paper.on('blank:pointerclick', handler);
 		}
 	});
+
+	return {
+		add: element
+	};
 });

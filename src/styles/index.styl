@@ -1,8 +1,12 @@
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
 #paper {
-	height: 700px;
+	height: 100%;
 	z-index: 1;
-	margin: 40px 0;
-	border: 1px solid #eee;
 }
 
 #editor {
@@ -47,7 +51,7 @@
 #top-utils {
 	position: absolute;
 	top: 0;
-	left: 20px;
+	left: 0;
 	background: #807752;
 	width: 100%;
 	padding: 10px;
@@ -81,7 +85,8 @@
 }
 
 svg {
-	height: 100%;
+	margin-top: 55px;
+	height: calc(100% - 60px);
 }
 
 /*.mode-link {*/
