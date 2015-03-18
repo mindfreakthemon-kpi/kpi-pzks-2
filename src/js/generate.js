@@ -35,6 +35,7 @@ define(['jquery', 'joint', 'canvasi', 'toggles/type', 'underscore', 'adder'], fu
 			target,
 			source,
 			array = [],
+			links = [],
 			map = {},
 			cellMap = {};
 
@@ -56,9 +57,9 @@ define(['jquery', 'joint', 'canvasi', 'toggles/type', 'underscore', 'adder'], fu
 			}
 
 			if (map[target][source]) {
-				if (map[target][source] === maxLinkWeight) {
-					continue;
-				}
+				//if (map[target][source] === maxLinkWeight) {
+				//	continue;
+				//}
 
 				map[target][source]++;
 			} else {
@@ -78,6 +79,9 @@ define(['jquery', 'joint', 'canvasi', 'toggles/type', 'underscore', 'adder'], fu
 			}
 		}
 
+		var EJ = (EW - correlation * EW) / correlation,
+			O = EJ - EL;
+
 		canvasi.graph.clear();
 
 		var P = 5;
@@ -87,8 +91,9 @@ define(['jquery', 'joint', 'canvasi', 'toggles/type', 'underscore', 'adder'], fu
 				y = Math.floor(index / P);
 
 			cellMap[index] = adder.add(ns.Entity, x * 200, 100 + y * 150);
-		});
 
+			cellMap[index].setDescr(Math.round(weight));
+		});
 
 		Object.keys(cellMap)
 			.forEach(function (index) {
@@ -122,10 +127,16 @@ define(['jquery', 'joint', 'canvasi', 'toggles/type', 'underscore', 'adder'], fu
 							}
 						});
 
+						links.push(link);
+
 						canvasi.graph.addCell(link);
 					}
 				}
 			});
+
+		if (links.length && O < 0) {
+			links[links.length - 1].setLabel(Math.round(EJ));
+		}
 
 	}
 
@@ -137,7 +148,8 @@ define(['jquery', 'joint', 'canvasi', 'toggles/type', 'underscore', 'adder'], fu
 		//	_minLinkWeight = minLinkWeight(),
 		//	_maxLinkWeight = maxLinkWeight();
 
-		generateGraph(1, 2, 25, 0.5, 5, 9999);
 		//generateGraph(_minWeight, _maxWeight, _numVertices, _correlation, _minLinkWeight, _maxLinkWeight);
+
+		generateGraph(1, 5, 5, 0.9, 100, 200);
 	});
 });
