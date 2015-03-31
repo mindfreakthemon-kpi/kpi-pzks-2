@@ -1,7 +1,8 @@
 define(['jquery', 'joint', 'canvasi', 'toggles/type', 'underscore', 'adder'], function ($, joint, canvasi, type, _, adder) {
 	var ns = joint.shapes.ns;
 
-	var $generate = $('#generate');
+	var $generate = $('#generate'),
+		$generateForm = $('#generate-form');
 
 	function minWeight() {
 		return prompt('Min vertex weight:', 1);
@@ -151,5 +152,21 @@ define(['jquery', 'joint', 'canvasi', 'toggles/type', 'underscore', 'adder'], fu
 		//generateGraph(_minWeight, _maxWeight, _numVertices, _correlation, _minLinkWeight, _maxLinkWeight);
 
 		generateGraph(1, 5, 5, 0.9, 100, 200);
+	});
+
+
+	$generateForm.on('submit', function (e) {
+		var form = e.target,
+			elements = form.elements;
+
+		e.preventDefault();
+
+		generateGraph(
+			elements.minWeight.valueAsNumber,
+			elements.maxWeight.valueAsNumber,
+			elements.numVertices.valueAsNumber,
+			elements.correlation.valueAsNumber,
+			elements.minLinkWeight.valueAsNumber,
+			9999999);
 	});
 });

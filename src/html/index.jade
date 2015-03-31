@@ -49,25 +49,57 @@ body
 			button.btn.btn-danger#clear(type='button') Clear
 
 	#editor
-			a.close &times;
-			form.container-fluid#editor-form
-				.row.edit.entity
-					.col-xs-12
-						.form-group
-							label Title
-							input#title.input-sm.form-control(type='text', name='title')
-				.row.edit.entity
-					.col-xs-12
-						.form-group
-							label Description
-							input#descr.input-sm.form-control(type='text', name='descr')
-				.row.edit.link
-					.col-xs-12
-						.form-group
-							label Label
-							input#label.input-sm.form-control(type='text', name='label')
-				.row
-					.col-xs-12
-						.form-group
-							button.btn.btn-block.btn-primary(type='submit') Save
-							button.remove.btn.btn-block.btn-danger(type='button') Remove
+		a.close &times;
+		form.container-fluid#editor-form
+			.row.edit.entity
+				.col-xs-12
+					.form-group
+						label Title
+						input#title.input-sm.form-control(type='text', name='title')
+			.row.edit.entity
+				.col-xs-12
+					.form-group
+						label Description
+						input#descr.input-sm.form-control(type='text', name='descr')
+			.row.edit.link
+				.col-xs-12
+					.form-group
+						label Label
+						input#label.input-sm.form-control(type='text', name='label')
+			.row
+				.col-xs-12
+					.form-group
+						button.btn.btn-block.btn-primary(type='submit') Save
+						button.remove.btn.btn-block.btn-danger(type='button') Remove
+
+	#generate-box
+		form.container-fluid#generate-form
+			.row
+				.col-xs-12
+					.form-group
+						label Min Weight
+						input.input-sm.form-control(type='number', min='1', name='minWeight', value='1')
+			.row
+				.col-xs-12
+					.form-group
+						label Max Weight
+						input.input-sm.form-control(type='number', min='1', name='maxWeight', value='5')
+			.row
+				.col-xs-12
+					.form-group
+						label Num Vertices
+						input.input-sm.form-control(type='number', min='1', name='numVertices', value='10')
+			.row
+				.col-xs-12
+					.form-group
+						label Correlation
+						input.input-sm.form-control(type='number', step='0.1', min='0', max='1', name='correlation', value='0.9')
+			.row
+				.col-xs-12
+					.form-group
+						label Min Link Weight
+						input.input-sm.form-control(type='number', min='1', name='minLinkWeight', value='1')
+			.row
+				.col-xs-12
+					.form-group
+						button.btn.btn-block.btn-primary(type='submit') Generate
