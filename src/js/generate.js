@@ -2,31 +2,8 @@ define(['jquery', 'joint', 'canvasi', 'toggles/type', 'underscore', 'adder'], fu
 	var ns = joint.shapes.ns;
 
 	var $generate = $('#generate'),
+		$generateBox = $('#generate-box'),
 		$generateForm = $('#generate-form');
-
-	function minWeight() {
-		return prompt('Min vertex weight:', 1);
-	}
-
-	function maxWeight() {
-		return prompt('Max vertex weight:', 2);
-	}
-
-	function numVertices() {
-		return prompt('Number of vertices:', 10);
-	}
-
-	function correlation() {
-		return prompt('Correlation (0-1):', 0.5);
-	}
-
-	function minLinkWeight() {
-		return prompt('Min link weight:', 1);
-	}
-
-	function maxLinkWeight() {
-		return prompt('Max link weight:', 9999);
-	}
 
 	function generateGraph(minWeight, maxWeight, numVertices, correlation, minLinkWeight, maxLinkWeight) {
 		var i, j,
@@ -136,24 +113,14 @@ define(['jquery', 'joint', 'canvasi', 'toggles/type', 'underscore', 'adder'], fu
 			});
 
 		if (links.length && O < 0) {
-			links[links.length - 1].setLabel(Math.round(EJ));
+			links[links.length - 1].setLabel(
+				Math.min(links[links.length - 1].getLabel() | 0, Math.round(EJ)));
 		}
-
 	}
 
 	$generate.on('click', function () {
-		//var _minWeight = minWeight(),
-		//	_maxWeight = maxWeight(),
-		//	_numVertices = numVertices(),
-		//	_correlation = correlation(),
-		//	_minLinkWeight = minLinkWeight(),
-		//	_maxLinkWeight = maxLinkWeight();
-
-		//generateGraph(_minWeight, _maxWeight, _numVertices, _correlation, _minLinkWeight, _maxLinkWeight);
-
-		generateGraph(1, 5, 5, 0.9, 100, 200);
+		$generateBox.toggleClass('visible');
 	});
-
 
 	$generateForm.on('submit', function (e) {
 		var form = e.target,

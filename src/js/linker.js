@@ -1,4 +1,4 @@
-define(['jquery', 'canvasi', 'toggles/mode', 'underscore'], function ($, canvasi, mode, _) {
+define(['jquery', 'canvasi', 'toggles/mode', 'toggles/type', 'underscore'], function ($, canvasi, mode, type, _) {
 	var ns = joint.shapes.ns,
 		_link;
 
@@ -44,12 +44,17 @@ define(['jquery', 'canvasi', 'toggles/mode', 'underscore'], function ($, canvasi
 
 		if (targetView && targetView !== cellView) {
 			// check if there is at least one link
-			var connected = _.some(canvasi.graph.getConnectedLinks(cellView.model), function (link) {
-				return link.prop('target').id === targetView.model.id ||
-					link.prop('source').id === targetView.model.id;
-			});
+			var links = canvasi.graph.getConnectedLinks(cellView.model),
+				connectedIn = _.filter(links, function (link) {
+					return link.prop('target').id === targetView.model.id;
+				}).length,
+				connectedOut = _.filter(links, function (link) {
+					return link.prop('source').id === targetView.model.id;
+				}).length,
+				connected = connectedIn + connectedOut;
 
-			if (connected.length > 1) {
+			if (type.mode === 'system' && connectedIn > 0 ||
+				type.mode === 'task' && connected > 0) {
 				return;
 			}
 

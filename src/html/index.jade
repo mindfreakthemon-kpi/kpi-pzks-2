@@ -27,26 +27,47 @@ body
 			label.btn.btn-default
 				input(type='radio', name='type', autocomplete='off', value='system')
 				| System
-		#algo.btn-group
-			//button.btn.btn-primary(type='button', data-algo='1') 1
-			button.btn.btn-primary(type='button', data-algo='2') 2
-			//button.btn.btn-primary(type='button', data-algo='7') 7
-			button.btn.btn-primary(type='button', data-algo='9') 9
-			//button.btn.btn-primary(type='button', data-algo='10') 10
-			button.btn.btn-primary(type='button', data-algo='11') 11
-			//button.btn.btn-primary(type='button', data-algo='16') 16
-			//button.btn.btn-primary(type='button', data-algo='17') 17
+		#algo.btn-group(data-toggle='buttons')
+			label.btn.btn-primary
+				input(name='algo', type='radio', value='1')
+				| 1
+			label.btn.btn-primary
+				input(name='algo', type='radio', value='2')
+				| 2*
+			label.btn.btn-primary
+				input(name='algo', type='radio', value='7')
+				| 7
+			label.btn.btn-primary
+				input(name='algo', type='radio', value='9')
+				| 9*
+			label.btn.btn-primary
+				input(name='algo', type='radio', value='10')
+				| 10
+			label.btn.btn-primary
+				input(name='algo', type='radio', value='11')
+				| 11*
+			label.btn.btn-primary
+				input(name='algo', type='radio', value='16')
+				| 16
+			label.btn.btn-primary
+				input(name='algo', type='radio', value='17')
+				| 17
 		.btn-group
 			button.btn.btn-primary#check(type='button') Check
 		.btn-group
 			button.btn.btn-info#generate(type='button') Generate
 		.btn-group
+			button.btn.btn-info#mpp(type='button') MPP
+		.btn-group
 			button.btn.btn-success#save(type='button') Save
-		.btn-group(style='position: relative;')
-			button.btn.btn-primary(type='button') Load
-			input#load(type='file')
+			div(style='position: relative; float: left;')
+				button.btn.btn-primary(type='button') Load
+				input#load(type='file')
 		.btn-group
 			button.btn.btn-danger#clear(type='button') Clear
+
+	#mpp-box
+
 
 	#editor
 		a.close &times;

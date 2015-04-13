@@ -45,7 +45,6 @@ define(['counter', 'underscore'], function (counter, _) {
 		},
 		17: function (data) {
 			return _.map(_.filter(data.list, function (rec) {
-				console.log(rec.I);
 				return rec.I === 0;
 			}), function (rec) {
 				return rec.element.getTitle();
@@ -61,4 +60,8 @@ define(['counter', 'underscore'], function (counter, _) {
 
 		alert(output);
 	});
+
+	return {
+		algos: algos
+	};
 });

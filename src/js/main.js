@@ -10,7 +10,8 @@ require({
 			geometry: '../lib-static/geometry.min',
 			vectorizer: '../lib-static/vectorizer.min',
 			markdown: '../lib-static/markdown',
-			bootstrap: '../lib/bootstrap/js/bootstrap.min'
+			bootstrap: '../lib/bootstrap/js/bootstrap.min',
+			astar: '../lib-static/astar'
 		},
 		shim: {
 			bootstrap: {
@@ -40,6 +41,7 @@ require({
 			'checker',
 			'generate',
 			'algo',
+			'mpp',
 			'fs'
 		]
 	});
