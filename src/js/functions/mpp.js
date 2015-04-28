@@ -220,6 +220,7 @@ define(['jquery', 'underscore', 'canvasi', 'cpath', 'api/algo', 'api/proc'], fun
 			}
 
 			if (!CHAN_ASSIGNED_LINK_MAP.has(channelId) && !CHAN_LINK_QUEUE_MAP[channelId].length) {
+				CHAN_COUNTERS_MAP[channelId] = 0;
 				CHAN_ASSIGNED_LINK_MAP.set(channelId, linkId);
 			} else {
 				CHAN_LINK_QUEUE_MAP[channelId].push(linkId);
@@ -239,6 +240,7 @@ define(['jquery', 'underscore', 'canvasi', 'cpath', 'api/algo', 'api/proc'], fun
 			}
 
 			if (!CHAN_ASSIGNED_LINK_MAP.has(channelId)) {
+				CHAN_COUNTERS_MAP[channelId] = 0;
 				CHAN_ASSIGNED_LINK_MAP.set(channelId, linkId);
 			} else {
 				CHAN_LINK_QUEUE_MAP[channelId].unshift(linkId);
@@ -286,7 +288,7 @@ define(['jquery', 'underscore', 'canvasi', 'cpath', 'api/algo', 'api/proc'], fun
 		function isLinkFinishedOnChannel(channelId) {
 			var linkId = CHAN_ASSIGNED_LINK_MAP.get(channelId);
 
-			return CHAN_COUNTERS_MAP[channelId] === LINK_QUEUE[linkId].weight;
+			return CHAN_COUNTERS_MAP[channelId] >= LINK_QUEUE[linkId].weight;
 
 		}
 
@@ -478,7 +480,7 @@ define(['jquery', 'underscore', 'canvasi', 'cpath', 'api/algo', 'api/proc'], fun
 						}
 
 						// 5.4.1.2.3
-						CHAN_COUNTERS_MAP[channelId] = 0;
+						// !! NOOP
 
 						// !!! additional step
 						CHAN_ASSIGNED_LINK_MAP.delete(channelId);
@@ -505,10 +507,11 @@ define(['jquery', 'underscore', 'canvasi', 'cpath', 'api/algo', 'api/proc'], fun
 			}
 		}
 
+
 		return {
 			states: STATES,
-			processors: PROCESSOR_QUEUE,
-			channels: CHAN_QUEUE,
+			processors: _.chain(PROCESSOR_QUEUE).sortBy('number').reverse().value(),
+			channels: _.chain(CHAN_QUEUE).sortBy(function (channel) { return PROCESSOR_QUEUE[channel.source].number; }).reverse().value(),
 			links: LINK_QUEUE,
 			tasks: TASK_QUEUE,
 			matrix: JSON.stringify(SYSTEM_MATRIX, null, '\t')
