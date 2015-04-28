@@ -84,6 +84,9 @@ body
 					label(for='mpp-proc-multi') Processor multiplier
 					input.form-control(type='number', id='mpp-proc-multi', min=0.25, step=0.25, max=8, value=1, required)
 				.form-group
+					label(for='mpp-phys-links') Physical links
+					input.form-control(type='number', id='mpp-phys-links', min=1, step=1, max=10, value=10, required)
+				.form-group
 					label Duplex connectivity: #{''}
 						input(type='checkbox', id='mpp-duplex', checked)
 		#mpp-inner

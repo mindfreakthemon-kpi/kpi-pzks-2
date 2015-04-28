@@ -14,6 +14,7 @@ define(['jquery', 'underscore', 'canvasi', 'cpath', 'api/algo', 'api/proc'], fun
 		var CHAN_LINK_QUEUE_MAP = {};
 		var CHAN_ASSIGNED_LINK_MAP = new Map();
 		var CHAN_COUNTERS_MAP = {};
+		var CHAN_PHYSICAL_LINKS = $('#mpp-phys-links').val() | 0;
 
 		var PROC_ASSIGNED_TASK_MAP = new Map();
 		var PROC_COUNTERS_MAP = {};
@@ -166,16 +167,19 @@ define(['jquery', 'underscore', 'canvasi', 'cpath', 'api/algo', 'api/proc'], fun
 			return findChannelBySourceTarget(channel.target, channel.source);
 		}
 
-		//function findNeighborChannelsByChannelId(channelId) {
-		//	return _.chain(CHAN_QUEUE)
-		//		.findWhere(function (channel) {
-		//			return channel.source === channelId;
-		//		})
-		//		.map(function (channel) {
-		//			return channel.id;
-		//		})
-		//		.value();
-		//}
+		function findNeighborChannelIdsByChannelId(channelId) {
+			var _channel = CHAN_QUEUE[channelId];
+
+			return _.chain(CHAN_QUEUE)
+				.filter(function (channel) {
+					return channel.id !== channelId &&
+						(channel.source === _channel.source || channel.target === _channel.source);
+				})
+				.map(function (channel) {
+					return channel.id;
+				})
+				.value();
+		}
 
 		function findChannelsBySourceTarget(source, target) {
 			if (source === target) {
@@ -264,14 +268,13 @@ define(['jquery', 'underscore', 'canvasi', 'cpath', 'api/algo', 'api/proc'], fun
 		}
 
 		function isChannelLockedByChannelProcessor(channelId) {
-			//var neighbors = findNeighborChannelsByChannelId(channelId);
-			//
-			//
-			//console.log(neighbors.filter(function (channel) {
-			//	return CHAN_ASSIGNED_LINK_MAP.has(channel.id);
-			//}));
+			var neighbors = findNeighborChannelIdsByChannelId(channelId);
 
-			return false;
+			var count = neighbors.filter(function (channelId) {
+				return CHAN_ASSIGNED_LINK_MAP.has(channelId);
+			}).length;
+
+			return count >= CHAN_PHYSICAL_LINKS;
 		}
 
 		function isTaskFinishedOnProcessor(processorId) {
