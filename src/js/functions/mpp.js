@@ -13,6 +13,7 @@ define(['jquery', 'underscore', 'canvasi', 'cpath', 'api/algo', 'api/proc'], fun
 
 		var CHAN_LINK_QUEUE_MAP = {};
 		var CHAN_ASSIGNED_LINK_MAP = new Map();
+		var CHAN_ASSIGNED_LINK_TEMP_MAP = new Map();
 		var CHAN_COUNTERS_MAP = {};
 		var CHAN_PHYSICAL_LINKS = $('#mpp-phys-links').val() | 0;
 
@@ -413,7 +414,7 @@ define(['jquery', 'underscore', 'canvasi', 'cpath', 'api/algo', 'api/proc'], fun
 				});
 
 				STATES.push({
-					row: T + 1,
+					row: T,
 					processors: procMap,
 					channels: chanMap
 				});
@@ -458,6 +459,8 @@ define(['jquery', 'underscore', 'canvasi', 'cpath', 'api/algo', 'api/proc'], fun
 					// 5.4.1.1
 					CHAN_COUNTERS_MAP[channelId]++;
 
+					console.log(channelId, T, CHAN_COUNTERS_MAP[channelId]);
+
 					// 5.4.1.2
 					if (isLinkFinishedOnChannel(channelId)) {
 						let linkId = CHAN_ASSIGNED_LINK_MAP.get(channelId);
@@ -476,7 +479,8 @@ define(['jquery', 'underscore', 'canvasi', 'cpath', 'api/algo', 'api/proc'], fun
 						} else {
 							let nextChannelId = link.path.shift();
 							// 5.4.1.2.2
-							assignLinkToChannelOrPush(nextChannelId, linkId);
+							//assignLinkToChannelOrPush(nextChannelId, linkId);
+							CHAN_ASSIGNED_LINK_TEMP_MAP.set(nextChannelId, linkId);
 						}
 
 						// 5.4.1.2.3
@@ -492,7 +496,15 @@ define(['jquery', 'underscore', 'canvasi', 'cpath', 'api/algo', 'api/proc'], fun
 			});
 
 			// !!! additional step
+			CHAN_ASSIGNED_LINK_TEMP_MAP.forEach(function (linkId, channelId) {
+				assignLinkToChannelOrPush(channelId, linkId);
+			});
+
+			// !!! additional step
 			PROC_ASSIGNED_TASK_TEMP_MAP.clear();
+
+			// !!! additional step
+			CHAN_ASSIGNED_LINK_TEMP_MAP.clear();
 
 			// !!! additional step
 			CHAN_QUEUE.forEach(function (chan, channelId) {

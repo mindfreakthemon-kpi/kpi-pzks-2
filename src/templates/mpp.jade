@@ -3,12 +3,15 @@
 		table.table.table-bordered.table-striped.table-hover
 			caption Processors
 			tr
+				//th #
 				each processor in processors
-					th= processor.number
-			each state, index in states
+					th #{processor.number} #{''}
+						sup #{processor.id}
+			each state in states
 				tr
-					each processor, index in processors
-						- var taskId = state.processors.get(index);
+					//td= state.row
+					each processor in processors
+						- var taskId = state.processors.get(processor.id);
 						td
 							if taskId !== undefined
 								- var task = tasks[taskId]
@@ -19,20 +22,27 @@
 		table.table.table-bordered.table-striped.table-hover
 			caption Channels
 			tr
+				//th #
 				each channel in channels
 					- var sourceProcessor = processors[channel.source]
 					- var targetProcessor = processors[channel.target]
-					th #{sourceProcessor.number} => #{targetProcessor.number}
-			each state, index in states
+					th #{sourceProcessor.number} => #{targetProcessor.number} #{''}
+						sup #{channel.id}
+			each state in states
 				tr
-					each channel, index in channels
-						- var linkId = state.channels.get(index)
+					//td= state.row
+					each channel in channels
+						- var linkId = state.channels.get(channel.id)
 						td
 							if linkId !== undefined
 								- var link = links[linkId]
 								- var sourceLink = tasks[link.source]
 								- var targetLink = tasks[link.target]
-								| #{sourceLink.number} => #{targetLink.number}
+								| #{sourceLink.number} #{''}
+								sup #{link.source}
+								| #{''}
+								| => #{targetLink.number} #{''}
+								sup #{link.target}
 							else
 								| &mdash;
 .row-fluid
