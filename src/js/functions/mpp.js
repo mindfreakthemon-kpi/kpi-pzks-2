@@ -18,7 +18,7 @@ define(['jquery', 'underscore', 'canvasi', 'cpath', 'api/algo', 'api/proc'], fun
 		var PROC_ASSIGNED_TASK_MAP = new Map();
 		var PROC_COUNTERS_MAP = {};
 		var PROC_PASSIVE_COUNTERS_MAP = {};
-		var PROC_MULTIPLIER = $('#mpp-proc-multi').val() | 0;
+		var PROC_MULTIPLIER = parseFloat($('#mpp-proc-multi').val());
 		var DUPLEX_ALLOWED = $('#mpp-duplex').is(':checked');
 		//////////////////////////////////////////////////////
 
