@@ -522,8 +522,12 @@ define(['jquery', 'underscore', 'canvasi', 'cpath', 'api/algo', 'api/proc'], fun
 
 		return {
 			states: STATES,
-			processors: _.chain(PROCESSOR_QUEUE).sortBy('number').reverse().value(),
-			channels: _.chain(CHAN_QUEUE).sortBy(function (channel) { return PROCESSOR_QUEUE[channel.source].number; }).reverse().value(),
+
+			processorsHeader: _.chain(PROCESSOR_QUEUE.slice(0)).sortBy('number').value(),
+			channelsHeader: _.chain(CHAN_QUEUE.slice(0)).sortBy(function (channel) { return PROCESSOR_QUEUE[channel.source].number; }).value(),
+
+			processors: PROCESSOR_QUEUE,
+			channels: CHAN_QUEUE,
 			links: LINK_QUEUE,
 			tasks: TASK_QUEUE,
 			matrix: JSON.stringify(SYSTEM_MATRIX, null, '\t')

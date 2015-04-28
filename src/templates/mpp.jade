@@ -4,18 +4,19 @@
 			caption Processors
 			tr
 				//th #
-				each processor in processors
+				each processor in processorsHeader
 					th #{processor.number} #{''}
 						sup #{processor.id}
 			each state in states
 				tr
 					//td= state.row
-					each processor in processors
+					each processor in processorsHeader
 						- var taskId = state.processors.get(processor.id);
 						td
 							if taskId !== undefined
 								- var task = tasks[taskId]
 								= task.number
+								sup #{taskId}
 							else
 								| &mdash;
 	.col-xs-6
@@ -23,7 +24,7 @@
 			caption Channels
 			tr
 				//th #
-				each channel in channels
+				each channel in channelsHeader
 					- var sourceProcessor = processors[channel.source]
 					- var targetProcessor = processors[channel.target]
 					th #{sourceProcessor.number} => #{targetProcessor.number} #{''}
@@ -31,7 +32,7 @@
 			each state in states
 				tr
 					//td= state.row
-					each channel in channels
+					each channel in channelsHeader
 						- var linkId = state.channels.get(channel.id)
 						td
 							if linkId !== undefined
