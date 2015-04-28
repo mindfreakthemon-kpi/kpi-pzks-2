@@ -1,39 +1,43 @@
 {
-	"name": "ruslanova",
-	"version": "0.0.1",
-	"private": true,
-	"dependencies": {
-		"requirejs": "*",
-		"lodash": "*",
-		"jquery": "*",
-	  "bootstrap": "*",
-	  "joint": "*",
-	  "backbone": "*"
-	},
-	"exportsOverride": {
-		"joint": {
-			"js": "dist/*.js",
-			"css": "dist/*.css"
-		},
-		"bootstrap": {
+  "name": "ruslanova",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "requirejs": "*",
+    "lodash": "*",
+    "jquery": "*",
+    "bootstrap": "*",
+    "joint": "*",
+    "backbone": "*",
+    "jade": "~1.9.2"
+  },
+  "exportsOverride": {
+    "jade": {
+      "js": "**/*.js"
+    },
+    "joint": {
+      "js": "dist/*.js",
+      "css": "dist/*.css"
+    },
+    "bootstrap": {
       "js": "**/*.js",
       "css": "**/*.css",
-		  "fonts": "**/*.{ttf,woff,eot,svg}"
-		},
-		"requirejs": {
-			"js": "require.js"
-		},
-		"jquery": {
-			"js": [
-				"dist/*.js",
-				"dist/*.map"
-			]
-		},
-		"backbone": {
-			"js": "backbone.js"
-		},
-		"lodash": {
-			"js": "**/*.js"
-		}
-	}
+      "fonts": "**/*.{ttf,woff,eot,svg}"
+    },
+    "requirejs": {
+      "js": "require.js"
+    },
+    "jquery": {
+      "js": [
+        "dist/*.js",
+        "dist/*.map"
+      ]
+    },
+    "backbone": {
+      "js": "backbone.js"
+    },
+    "lodash": {
+      "js": "**/*.js"
+    }
+  }
 }

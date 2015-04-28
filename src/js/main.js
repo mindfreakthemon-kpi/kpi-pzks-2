@@ -5,13 +5,13 @@ require({
 			joint: '../lib/joint/js/joint.clean',
 			lodash: '../lib/lodash/js/lodash.min',
 			underscore: '../lib/lodash/js/lodash.min',
-			//jade: '../lib/jade/js/runtime',
+			jade: '../lib/jade/js/runtime',
 			backbone: '../lib/backbone/js/backbone',
 			geometry: '../lib-static/geometry.min',
 			vectorizer: '../lib-static/vectorizer.min',
 			markdown: '../lib-static/markdown',
 			bootstrap: '../lib/bootstrap/js/bootstrap.min',
-			astar: '../lib-static/astar'
+			cpath: '../lib-static/cpath'
 		},
 		shim: {
 			bootstrap: {
@@ -35,13 +35,12 @@ require({
 		},
 		deps: [
 			'bootstrap',
-			'editor',
-			'adder',
-			'linker',
-			'checker',
-			'generate',
-			'algo',
-			'mpp',
-			'fs'
+			'functions/editor',
+			'functions/adder',
+			'functions/linker',
+			'functions/checker',
+			'functions/fs',
+			'functions/generate',
+			'mpp'
 		]
 	});

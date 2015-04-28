@@ -1,11 +1,11 @@
 define(['joint', 'jquery', 'shapes'], function (joint, $) {
 	var tools = {
-			mode: 'edit',
+			mode: '1',
 			change: $.Callbacks('memory')
 		};
 
 	$(document)
-		.on('change', '#mode', function (e) {
+		.on('change', '#proc', function (e) {
 			var oldMode = tools.mode;
 
 			tools.mode = e.target.value;

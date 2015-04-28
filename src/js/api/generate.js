@@ -1,11 +1,7 @@
-define(['jquery', 'joint', 'canvasi', 'toggles/type', 'underscore', 'adder'], function ($, joint, canvasi, type, _, adder) {
+define(['underscore', 'joint', 'canvasi', 'functions/adder'], function (_, joint, canvasi, adder) {
 	var ns = joint.shapes.ns;
 
-	var $generate = $('#generate'),
-		$generateBox = $('#generate-box'),
-		$generateForm = $('#generate-form');
-
-	function generateGraph(minWeight, maxWeight, numVertices, correlation, minLinkWeight, maxLinkWeight) {
+	function generateGraph(minWeight, maxWeight, numVertices, correlation, minLinkWeight) {
 		var i, j,
 			q = 1000,
 			EW,
@@ -60,9 +56,9 @@ define(['jquery', 'joint', 'canvasi', 'toggles/type', 'underscore', 'adder'], fu
 		var EJ = (EW - correlation * EW) / correlation,
 			O = EJ - EL;
 
-		canvasi.graph.clear();
+		canvasi.taskGraph.clear();
 
-		var P = 5;
+		var P = 4;
 
 		array.forEach(function (weight, index) {
 			var x = index % P + 1,
@@ -107,7 +103,7 @@ define(['jquery', 'joint', 'canvasi', 'toggles/type', 'underscore', 'adder'], fu
 
 						links.push(link);
 
-						canvasi.graph.addCell(link);
+						canvasi.taskGraph.addCell(link);
 					}
 				}
 			});
@@ -118,22 +114,7 @@ define(['jquery', 'joint', 'canvasi', 'toggles/type', 'underscore', 'adder'], fu
 		}
 	}
 
-	$generate.on('click', function () {
-		$generateBox.toggleClass('visible');
-	});
-
-	$generateForm.on('submit', function (e) {
-		var form = e.target,
-			elements = form.elements;
-
-		e.preventDefault();
-
-		generateGraph(
-			elements.minWeight.valueAsNumber,
-			elements.maxWeight.valueAsNumber,
-			elements.numVertices.valueAsNumber,
-			elements.correlation.valueAsNumber,
-			elements.minLinkWeight.valueAsNumber,
-			9999999);
-	});
+	return {
+		generateGraph: generateGraph
+	}
 });

@@ -1,0 +1,37 @@
+.row-fluid
+	.col-xs-6
+		table.table.table-bordered.table-striped.table-hover
+			caption Processors
+			tr
+				each processor in processors
+					th= processor.number
+			each state, index in states
+				tr
+					each processor, index in processors
+						- var taskId = state.processors.get(index);
+						td
+							if taskId !== undefined
+								- var task = tasks[taskId]
+								= task.number
+							else
+								| &mdash;
+	.col-xs-6
+		table.table.table-bordered.table-striped.table-hover
+			caption Channels
+			tr
+				each channel in channels
+					- var sourceProcessor = processors[channel.source]
+					- var targetProcessor = processors[channel.target]
+					th #{sourceProcessor.number} => #{targetProcessor.number}
+			each state, index in states
+				tr
+					each channel, index in channels
+						- var linkId = state.channels.get(index)
+						td
+							if linkId !== undefined
+								- var link = links[linkId]
+								- var sourceLink = tasks[link.source]
+								- var targetLink = tasks[link.target]
+								| #{sourceLink.number} => #{targetLink.number}
+							else
+								| &mdash;

@@ -1,10 +1,10 @@
 define(['canvasi', 'underscore'], function (canvasi, _) {
 	return function () {
-		var elements = canvasi.graph.getElements(),
+		var elements = canvasi.taskGraph.getElements(),
 			data = [];
 
 		function _curses(element, options, paths, path) {
-			var links = canvasi.graph.getConnectedLinks(element, options);
+			var links = canvasi.taskGraph.getConnectedLinks(element, options);
 
 			if (options.inbound && path) {
 				path.push(element);
@@ -19,7 +19,7 @@ define(['canvasi', 'underscore'], function (canvasi, _) {
 
 			_.each(links, function (link) {
 				var _target = link.prop(options.inbound ? 'source' : 'target').id,
-					_element = canvasi.graph.getCell(_target);
+					_element = canvasi.taskGraph.getCell(_target);
 
 				if (element.id === _element.id) {
 					return;
@@ -112,9 +112,9 @@ define(['canvasi', 'underscore'], function (canvasi, _) {
 			rec.Luft = rec.Rsr - rec.Psr;
 
 			rec.Pr = rec.Nkrk / Nkrgrk + rec.Tkrk / Tkrgrk;
-			rec.S = canvasi.graph.getConnectedLinks(rec.element).length;
-			rec.E = canvasi.graph.getConnectedLinks(rec.element, { outbound: true }).length;
-			rec.I = canvasi.graph.getConnectedLinks(rec.element, { inbound: true }).length;
+			rec.S = canvasi.taskGraph.getConnectedLinks(rec.element).length;
+			rec.E = canvasi.taskGraph.getConnectedLinks(rec.element, { outbound: true }).length;
+			rec.I = canvasi.taskGraph.getConnectedLinks(rec.element, { inbound: true }).length;
 			rec.W = +rec.element.getDescr();
 		});
 

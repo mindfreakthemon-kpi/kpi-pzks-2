@@ -1,0 +1,22 @@
+a.close &times;
+form.container-fluid#editor-form
+	.row.edit.entity
+		.col-xs-12
+			.form-group
+				label Title
+				input#title.input-sm.form-control(type='text', name='title')
+	.row.edit.entity
+		.col-xs-12
+			.form-group
+				label Description
+				input#descr.input-sm.form-control(type='text', name='descr')
+	.row.edit.link
+		.col-xs-12
+			.form-group
+				label Label
+				input#label.input-sm.form-control(type='text', name='label')
+	.row
+		.col-xs-12
+			.form-group
+				button.btn.btn-block.btn-primary(type='submit') Save
+				button.remove.btn.btn-block.btn-danger(type='button') Remove

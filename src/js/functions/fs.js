@@ -1,4 +1,4 @@
-define(['jquery', 'canvasi', 'toggles/type', 'storage'], function ($, canvasi, type, storage) {
+define(['jquery', 'canvasi', 'api/storage'], function ($, canvasi, storage) {
 	var $save = $('#save'),
 		$load = $('#load');
 
@@ -28,7 +28,8 @@ define(['jquery', 'canvasi', 'toggles/type', 'storage'], function ($, canvasi, t
 
 				storage.saveAll(json);
 
-				canvasi.graph.fromJSON(json[type.mode]);
+				canvasi.taskGraph.fromJSON(json.task);
+				canvasi.systemGraph.fromJSON(json.system);
 
 			} catch (e) {
 				alert('Could not load from file');

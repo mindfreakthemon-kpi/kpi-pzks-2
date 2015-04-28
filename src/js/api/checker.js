@@ -1,17 +1,16 @@
-define(['jquery', 'joint', 'canvasi', 'toggles/type', 'underscore'], function ($, joint, canvasi, type, _) {
-	var $check = $('#check');
-
+define(['canvasi', 'underscore'], function (canvasi, _) {
 	function checkTask(elements) {
+		if (elements.length) {
+
+		}
 		function _curses(element) {
-			var links = canvasi.graph.getConnectedLinks(element, {
+			var links = canvasi.taskGraph.getConnectedLinks(element, {
 				outbound: true
 			});
 
 			_.each(links, function (link) {
 				var _target = link.prop('target').id,
-					_element = canvasi.graph.getCell(_target);
-
-				console.log('%s => %s', element.getTitle(), _element.getTitle());
+					_element = canvasi.taskGraph.getCell(_target);
 
 				if (element.id === _element.id) {
 					return;
@@ -36,7 +35,7 @@ define(['jquery', 'joint', 'canvasi', 'toggles/type', 'underscore'], function ($
 				element.prop('traversed', {});
 			});
 
-			_.each(canvasi.graph.getElements(), function (element) {
+			_.each(canvasi.taskGraph.getElements(), function (element) {
 				_curses(element);
 			});
 
@@ -55,7 +54,7 @@ define(['jquery', 'joint', 'canvasi', 'toggles/type', 'underscore'], function ($
 
 			if (indexOf > -1) {
 				elements.splice(indexOf, 1);
-				_.each(canvasi.graph.getNeighbors(element), _curses);
+				_.each(canvasi.systemGraph.getNeighbors(element), _curses);
 			}
 		})(elements[0]);
 
@@ -67,29 +66,8 @@ define(['jquery', 'joint', 'canvasi', 'toggles/type', 'underscore'], function ($
 		return true;
 	}
 
-	function check() {
-		var elements = canvasi.graph.getElements(),
-			result = false;
-
-		if (!elements.length) {
-			alert('ERROR: No elements');
-			return;
-		}
-
-		switch (type.mode) {
-			case 'task':
-				result = checkTask(elements);
-				break;
-
-			case 'system':
-				result = checkSystem(elements);
-				break;
-		}
-
-		if (result) {
-			alert('ALL IS OK');
-		}
+	return {
+		checkTask: checkTask,
+		checkSystem: checkSystem
 	}
-
-	$check.on('click', check);
 });

@@ -25,6 +25,9 @@
   </component>
   <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false" />
   <component name="IdProvider" IDEtalkID="FF0B567C9F60E5E7F766F45ED27A3BDF" />
+  <component name="JavaScriptLibraryMappings">
+    <includedPredefinedLibrary name="ECMAScript 6" />
+  </component>
   <component name="Palette2">
     <group name="Swing">
       <item class="com.intellij.uiDesigner.HSpacer" tooltip-text="Horizontal Spacer" icon="/com/intellij/uiDesigner/icons/hspacer.png" removable="false" auto-create-binding="false" can-attach-label="false">

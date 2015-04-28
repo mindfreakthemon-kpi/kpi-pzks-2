@@ -1,6 +1,6 @@
-define(['jquery', 'canvasi', 'toggles/mode'], function ($, canvasi, mode) {
+define(['jquery', 'canvasi', 'toggles/mode', 'templates'], function ($, canvasi, mode, templates) {
 	var ns = joint.shapes.ns,
-		$editor = $('#editor'),
+		$editor = $('#editor').html(templates.editor()),
 		$editorForm = $('#editor-form'),
 		$clear = $('#clear'),
 		$title = $('#title'),
@@ -26,7 +26,8 @@ define(['jquery', 'canvasi', 'toggles/mode'], function ($, canvasi, mode) {
 	});
 
 	$clear.on('click', function () {
-		canvasi.graph.clear();
+		canvasi.taskGraph.clear();
+		canvasi.systemGraph.clear();
 	});
 
 	function close() {
@@ -56,15 +57,17 @@ define(['jquery', 'canvasi', 'toggles/mode'], function ($, canvasi, mode) {
 		}
 	}
 
-	canvasi.paper.on('blank:pointerclick', close);
+	canvasi.taskPaper.on('blank:pointerclick', close);
 
 	mode.change.add(function () {
 		var editMode = mode.mode === 'edit';
 
-		canvasi.paper.off('cell:pointerclick', edit);
+		canvasi.taskPaper.off('cell:pointerclick', edit);
+		canvasi.systemPaper.off('cell:pointerclick', edit);
 
 		if (editMode) {
-			canvasi.paper.on('cell:pointerclick', edit);
+			canvasi.taskPaper.on('cell:pointerclick', edit);
+			canvasi.systemPaper.on('cell:pointerclick', edit);
 		}
 
 		close();
