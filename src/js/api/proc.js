@@ -1,10 +1,14 @@
 define(['underscore', 'canvasi', 'toggles/proc'], function (_, canvasi, proc) {
+	function isFree(data, processorId) {
+		return !data.PROC_ASSIGNED_TASK_MAP.has(processorId) && !data.PROC_ASSIGNED_TASK_TEMP_MAP.has(processorId);
+	}
+
 	var procs = {
 		1: function (data) {
 			return _.chain(data.PROCESSOR_QUEUE)
 				// only free
 				.filter(function (processor) {
-					return !data.PROC_ASSIGNED_TASK_MAP.has(processor.id);
+					return isFree(data, processor.id);
 				})
 				.map(_.iteratee('id'))
 				// random
@@ -21,7 +25,7 @@ define(['underscore', 'canvasi', 'toggles/proc'], function (_, canvasi, proc) {
 				.reverse()
 				// only free
 				.filter(function (processor) {
-					return !data.PROC_ASSIGNED_TASK_MAP.has(processor.id);
+					return isFree(data, processor.id);
 				})
 				.map(_.iteratee('id'))
 				.first()
@@ -37,7 +41,7 @@ define(['underscore', 'canvasi', 'toggles/proc'], function (_, canvasi, proc) {
 				.reverse()
 				// only free
 				.filter(function (processor) {
-					return !data.PROC_ASSIGNED_TASK_MAP.has(processor.id);
+					return isFree(data, processor.id);
 				})
 				.map(_.iteratee('id'))
 				.first()

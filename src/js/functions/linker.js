@@ -51,11 +51,9 @@ define(['jquery', 'canvasi', 'toggles/mode', 'underscore'], function ($, canvasi
 				connectedOut = _.filter(links, function (link) {
 					return link.prop('source').id === targetView.model.id;
 				}).length,
-				connected = connectedIn + connectedOut,
-				type = e.target.closest('[data-name]').dataset.name;
+				connected = connectedIn + connectedOut;
 
-			if (type === 'system' && connectedIn > 0 ||
-				type === 'task' && connected > 0) {
+			if (connected > 0) {
 				return;
 			}
 
