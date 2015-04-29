@@ -16,6 +16,8 @@ define(['jquery', 'canvasi', 'templates', 'functions/mpp', 'toggles/proc'], func
 
 	$mppBox.on('click', '#mpp-generate', generate);
 	$mppBox.on('change', '#mpp-duplex', generate);
+	$mppBox.on('change', '#mpp-proc-multi', generate);
+	$mppBox.on('change', '#mpp-phys-links', generate);
 
 	proc.change.add(generate);
 });

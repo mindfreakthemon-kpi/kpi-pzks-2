@@ -524,7 +524,7 @@ define(['jquery', 'underscore', 'canvasi', 'cpath', 'api/algo', 'api/proc'], fun
 			states: STATES,
 
 			processorsHeader: _.chain(PROCESSOR_QUEUE.slice(0)).sortBy('number').value(),
-			channelsHeader: _.chain(CHAN_QUEUE.slice(0)).sortBy(function (channel) { return PROCESSOR_QUEUE[channel.source].number; }).value(),
+			channelsHeader: _.chain(CHAN_QUEUE.slice(0)).sortBy(function (channel) { return PROCESSOR_QUEUE[channel.source].number + '_' + PROCESSOR_QUEUE[channel.source].target; }).value(),
 
 			processors: PROCESSOR_QUEUE,
 			channels: CHAN_QUEUE,
