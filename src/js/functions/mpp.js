@@ -273,9 +273,19 @@ define(['jquery', 'underscore', 'canvasi', 'cpath', 'api/algo', 'api/proc'], fun
 		function isChannelLockedByChannelProcessor(channelId) {
 			var neighbors = findNeighborChannelIdsByChannelId(channelId);
 
-			var count = neighbors.filter(function (channelId) {
+			neighbors = neighbors.filter(function (channelId) {
 				return CHAN_ASSIGNED_LINK_MAP.has(channelId);
-			}).length;
+			});
+
+			if (DUPLEX_ALLOWED) {
+				neighbors = neighbors.filter(function (channelId, index) {
+					var inverseChannelId = findInverseChannelByChannelId(channelId);
+
+					return neighbors.indexOf(inverseChannelId) < index;
+				});
+			}
+
+			var count = neighbors.length;
 
 			return count >= CHAN_PHYSICAL_LINKS;
 		}
@@ -458,8 +468,6 @@ define(['jquery', 'underscore', 'canvasi', 'cpath', 'api/algo', 'api/proc'], fun
 				if (CHAN_ASSIGNED_LINK_MAP.has(channelId)) {
 					// 5.4.1.1
 					CHAN_COUNTERS_MAP[channelId]++;
-
-					console.log(channelId, T, CHAN_COUNTERS_MAP[channelId]);
 
 					// 5.4.1.2
 					if (isLinkFinishedOnChannel(channelId)) {

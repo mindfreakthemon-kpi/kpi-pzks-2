@@ -64,7 +64,7 @@ define(['underscore', 'joint', 'canvasi', 'functions/adder'], function (_, joint
 			var x = index % P + 1,
 				y = Math.floor(index / P);
 
-			cellMap[index] = adder.add(ns.Entity, x * 200, 100 + y * 150);
+			cellMap[index] = adder.add(canvasi.taskGraph, ns.Entity, x * 200, 100 + y * 150);
 
 			cellMap[index].setDescr(Math.round(weight));
 		});

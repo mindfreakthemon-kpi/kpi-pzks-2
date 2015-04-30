@@ -1,15 +1,19 @@
 .row-fluid
-	.col-xs-6
+	.col-xs-12
+		h4 Task queue
+		pre.code= tasks.map(function (task) { return task.number; }).join(', ')
+.row-fluid
+	.col-xs-4
 		table.table.table-bordered.table-striped.table-hover
 			caption Processors
 			tr
-				//th #
+				th(width='50') #
 				each processor in processorsHeader
 					th #{processor.number} #{''}
 						sup #{processor.id}
 			each state in states
 				tr
-					//td= state.row
+					td= state.row + 1
 					each processor in processorsHeader
 						- var taskId = state.processors.get(processor.id);
 						td
@@ -19,11 +23,11 @@
 								sup #{taskId}
 							else
 								| &mdash;
-	.col-xs-6
+	.col-xs-8
 		table.table.table-bordered.table-striped.table-hover
 			caption Channels
 			tr
-				//th #
+				th(width='50') #
 				each channel in channelsHeader
 					- var sourceProcessor = processors[channel.source]
 					- var targetProcessor = processors[channel.target]
@@ -31,7 +35,7 @@
 						sup #{channel.id}
 			each state in states
 				tr
-					//td= state.row
+					td= state.row + 1
 					each channel in channelsHeader
 						- var linkId = state.channels.get(channel.id)
 						td
