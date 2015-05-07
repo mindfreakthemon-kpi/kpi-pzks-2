@@ -1,8 +1,10 @@
-define(['jquery', 'underscore', 'canvasi', 'cpath', 'api/algo', 'api/proc'], function ($, _, canvasi, cpath, algo, proc) {
+define(['jquery', 'underscore', 'canvasi', 'functions/cpath', 'api/algo', 'api/proc'], function ($, _, canvasi, cpath, algo, proc) {
 	'use strict';
 
 	return function () {
 		//////////////////////////////////////////////////////
+		var INVARIANTING_ARRAY = [];
+
 		var TASK_READY_SET = new Set();
 		var TASK_FINISHED_SET = new Set();
 		var TASK_ASSIGNED_PROC_MAP = new Map();
@@ -187,7 +189,7 @@ define(['jquery', 'underscore', 'canvasi', 'cpath', 'api/algo', 'api/proc'], fun
 				return [];
 			}
 
-			var path = isFinite(SYSTEM_MATRIX[source][target]) ? [source, target] : cpath(SYSTEM_MATRIX, source)[target].path;
+			var path = cpath(SYSTEM_MATRIX, source, target);
 			var result = [];
 			var current = path.shift();
 
@@ -204,9 +206,14 @@ define(['jquery', 'underscore', 'canvasi', 'cpath', 'api/algo', 'api/proc'], fun
 			var processorId = proc.find({
 				PROCESSOR_QUEUE: PROCESSOR_QUEUE,
 				PROC_ASSIGNED_TASK_MAP: PROC_ASSIGNED_TASK_MAP,
+				TASK_ASSIGNED_PROC_MAP: TASK_ASSIGNED_PROC_MAP,
 				PROC_PASSIVE_COUNTERS_MAP: PROC_PASSIVE_COUNTERS_MAP,
-				PROC_ASSIGNED_TASK_TEMP_MAP: PROC_ASSIGNED_TASK_TEMP_MAP
-			});
+				PROC_ASSIGNED_TASK_TEMP_MAP: PROC_ASSIGNED_TASK_TEMP_MAP,
+				SYSTEM_MATRIX: SYSTEM_MATRIX,
+				INVARIANTING_ARRAY: INVARIANTING_ARRAY,
+				TASK_QUEUE: TASK_QUEUE,
+				LINK_QUEUE: LINK_QUEUE
+			}, taskId);
 
 			if (processorId !== undefined) {
 				TASK_ASSIGNED_PROC_MAP.set(taskId, processorId);
@@ -278,16 +285,15 @@ define(['jquery', 'underscore', 'canvasi', 'cpath', 'api/algo', 'api/proc'], fun
 			});
 
 			if (DUPLEX_ALLOWED) {
-				neighbors = neighbors.filter(function (channelId, index) {
-					var inverseChannelId = findInverseChannelByChannelId(channelId);
+				let inverseChannelId = findInverseChannelByChannelId(channelId);
 
-					return neighbors.indexOf(inverseChannelId) < index;
-				});
+				if (neighbors.indexOf(inverseChannelId) > -1) {
+					// channel is using duplex slot, so it's ok
+					return false;
+				}
 			}
 
-			var count = neighbors.length;
-
-			return count >= CHAN_PHYSICAL_LINKS;
+			return neighbors.length >= CHAN_PHYSICAL_LINKS;
 		}
 
 		function isTaskFinishedOnProcessor(processorId) {
@@ -529,6 +535,7 @@ define(['jquery', 'underscore', 'canvasi', 'cpath', 'api/algo', 'api/proc'], fun
 
 
 		return {
+			invarianting: INVARIANTING_ARRAY,
 			states: STATES,
 
 			processorsHeader: _.chain(PROCESSOR_QUEUE.slice(0)).sortBy('number').value(),

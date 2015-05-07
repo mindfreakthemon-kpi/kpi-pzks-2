@@ -10,7 +10,9 @@ html
 body
 	#papers
 		.col-xs-6#taskPaper(data-name='task')
+			button.btn.btn-danger.clear(type='button') Clear
 		.col-xs-6#systemPaper(data-name='system')
+			button.btn.btn-danger.clear(type='button') Clear
 
 	#top-utils
 		#mode.btn-group(data-toggle='buttons')
@@ -24,15 +26,21 @@ body
 				input(type='radio', name='mode', value='link')
 				| Link
 		#proc.btn-group(data-toggle='buttons')
-			label.btn.btn-primary.active
-				input(type='radio', name='proc', value='1', checked)
+			label.btn.btn-primary
+				input(type='radio', name='proc', value='1')
 				| 1*
 			//label.btn.btn-primary
 			//	input(type='radio', name='proc', value='2')
 			//	| 2
 			//label.btn.btn-primary
 			//	input(type='radio', name='proc', value='3')
-				| 3
+			//	| 3
+			//label.btn.btn-primary
+			//	input(type='radio', name='proc', value='4')
+			//	| 4
+			label.btn.btn-primary.active
+				input(type='radio', name='proc', value='5', checked)
+				| 5*
 		#algo.btn-group(data-toggle='buttons')
 			//label.btn.btn-primary
 			//	input(name='algo', type='radio', value='1')
@@ -73,7 +81,7 @@ body
 				button.btn.btn-primary(type='button') Load
 				input#load(type='file')
 		.btn-group
-			button.btn.btn-danger#clear(type='button') Clear
+			button.btn.btn-danger#clear(type='button') Clear All
 
 	#mpp-box
 		.row-fluid
@@ -85,7 +93,7 @@ body
 					input.form-control(type='number', id='mpp-proc-multi', min=0.25, step=0.25, max=8, value=1, required)
 				.form-group
 					label(for='mpp-phys-links') Physical links
-					input.form-control(type='number', id='mpp-phys-links', min=1, step=1, max=10, value=10, required)
+					input.form-control(type='number', id='mpp-phys-links', min=1, step=1, max=10, value=1, required)
 				.form-group
 					label Duplex connectivity: #{''}
 						input(type='checkbox', id='mpp-duplex', checked)

@@ -4,6 +4,7 @@ define(['jquery', 'canvasi', 'toggles/mode', 'templates'], function ($, canvasi,
 		$editorForm = $('#editor-form'),
 		$clear = $('#clear'),
 		$title = $('#title'),
+		$papers = $('#papers'),
 		$label = $('#label'),
 		$descr = $('#descr');
 
@@ -28,6 +29,12 @@ define(['jquery', 'canvasi', 'toggles/mode', 'templates'], function ($, canvasi,
 	$clear.on('click', function () {
 		canvasi.taskGraph.clear();
 		canvasi.systemGraph.clear();
+	});
+
+	$papers.on('click', '.clear', function () {
+		var $el = $(this).closest('[data-name]');
+
+		canvasi[$el.data('name') + 'Graph'].clear();
 	});
 
 	function close() {

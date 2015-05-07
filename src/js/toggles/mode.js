@@ -1,6 +1,6 @@
 define(['joint', 'jquery', 'shapes'], function (joint, $) {
 	var tools = {
-			mode: 'edit',
+			mode: $('#mode :checked').val(),
 			change: $.Callbacks('memory')
 		};
 

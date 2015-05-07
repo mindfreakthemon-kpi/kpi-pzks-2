@@ -50,8 +50,22 @@
 								sup #{link.target}
 							else
 								| &mdash;
-.row-fluid
-	.col-xs-12
-		details
-			summary SYSTEM_MATRIX
-			pre= matrix
+
+if invarianting.length
+	.row-fluid
+		.col-xs-12
+			table.table.table-bordered.table-striped.table-hover
+				caption Processor assignments invariants
+				each invariant in invarianting
+					tr
+						th
+							= tasks[invariant.taskId].number
+						td
+							each processor in processorsHeader
+								if invariant.map.has(processor.id)
+									| &nbsp;
+									= processor.number
+									|  (#{invariant.map.get(processor.id)})
+									| &nbsp; &nbsp;
+
+
