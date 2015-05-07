@@ -81,6 +81,11 @@ define(['underscore', 'canvasi', 'toggles/proc', 'functions/cpath'], function (_
 					parentTaskIds.forEach(function (parentTaskId) {
 						var sourceProcId = data.TASK_ASSIGNED_PROC_MAP.get(parentTaskId);
 
+						if (typeof sourceProcId === 'undefined') {
+							// task parent task wasn't assigned
+							return;
+						}
+
 						if (sourceProcId === procId) {
 							return;
 						}

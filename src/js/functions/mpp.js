@@ -61,6 +61,10 @@ define(['jquery', 'underscore', 'canvasi', 'functions/cpath', 'api/algo', 'api/p
 		});
 
 		var PROCESSOR_QUEUE = _.chain(canvasi.systemGraph.getElements())
+			.sortBy(function (processor) {
+				return canvasi.systemGraph.getConnectedLinks(processor).length;
+			})
+			.reverse()
 			.map(function (processor, processorId) {
 				// reset counters
 				PROC_COUNTERS_MAP[processorId] = 0;
