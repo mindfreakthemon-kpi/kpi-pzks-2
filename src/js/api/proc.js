@@ -1,21 +1,39 @@
 define(['underscore', 'canvasi', 'toggles/proc', 'functions/cpath'], function (_, canvasi, proc, cpath) {
-	function isFree(data, processorId) {
+	function isFree(data, taskId, processorId) {
+		if (data.PROC_ASSIGNED_TASK_MAP.has(processorId)) {
+			var parentTaskIds = [];
+
+			_.chain(data.LINK_QUEUE)
+				.filter(function (link) {
+					return link.target === taskId;
+				})
+				.each(function (link) {
+					parentTaskIds.push(link.source);
+				})
+				.value();
+
+			if (parentTaskIds.indexOf(
+					data.PROC_ASSIGNED_TASK_MAP.get(processorId)) > -1) {
+				return true;
+			}
+		}
+
 		return !data.PROC_ASSIGNED_TASK_MAP.has(processorId) && !data.PROC_ASSIGNED_TASK_TEMP_MAP.has(processorId);
 	}
 
 	var procs = {
-		1: function (data) {
+		1: function (data, taskId) {
 			return _.chain(data.PROCESSOR_QUEUE)
 				// only free
 				.filter(function (processor) {
-					return isFree(data, processor.id);
+					return isFree(data, taskId, processor.id);
 				})
 				.map(_.iteratee('id'))
 				// random
 				.sample()
 				.value();
 		},
-		2: function (data) {
+		2: function (data, taskId) {
 			return _.chain(data.PROCESSOR_QUEUE)
 				// sort by passive counter in asc
 				.sortBy(function (processor) {
@@ -25,13 +43,13 @@ define(['underscore', 'canvasi', 'toggles/proc', 'functions/cpath'], function (_
 				.reverse()
 				// only free
 				.filter(function (processor) {
-					return isFree(data, processor.id);
+					return isFree(data, taskId, processor.id);
 				})
 				.map(_.iteratee('id'))
 				.first()
 				.value();
 		},
-		3: function (data) {
+		3: function (data, taskId) {
 			return _.chain(data.PROCESSOR_QUEUE)
 				// sort by links count in asc
 				.sortBy(function (processor) {
@@ -41,7 +59,7 @@ define(['underscore', 'canvasi', 'toggles/proc', 'functions/cpath'], function (_
 				.reverse()
 				// only free
 				.filter(function (processor) {
-					return isFree(data, processor.id);
+					return isFree(data, taskId, processor.id);
 				})
 				.map(_.iteratee('id'))
 				.first()
@@ -72,7 +90,7 @@ define(['underscore', 'canvasi', 'toggles/proc', 'functions/cpath'], function (_
 				.reverse()
 				// only free
 				.filter(function (processor) {
-					return isFree(data, processor.id);
+					return isFree(data, taskId, processor.id);
 				})
 				.map(_.iteratee('id'))
 				.sortBy(function (procId) {
