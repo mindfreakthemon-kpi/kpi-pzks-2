@@ -179,8 +179,12 @@ define(['jquery', 'underscore', 'canvasi', 'functions/cpath', 'api/algo', 'api/p
 
 			return _.chain(CHAN_QUEUE)
 				.filter(function (channel) {
-					return channel.id !== channelId &&
-						(channel.source === _channel.source || channel.target === _channel.source);
+					return channel.id !== channelId && (
+							channel.source === _channel.source ||
+							channel.target === _channel.source/* ||
+							channel.source === _channel.target ||
+							channel.target === _channel.target*/
+						);
 				})
 				.map(function (channel) {
 					return channel.id;
