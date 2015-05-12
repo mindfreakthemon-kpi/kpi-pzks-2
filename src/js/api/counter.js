@@ -107,6 +107,10 @@ define(['canvasi', 'underscore'], function (canvasi, _) {
 		}) / Tkrgrk);
 
 		_.each(data, function (rec) {
+			var inboundLinks = canvasi.taskGraph.getConnectedLinks(rec.element, { inbound: true });
+
+			rec.id = rec.element.id;
+
 			rec.Psr = rec.Tkrn;
 			rec.Rsr = Tkrgrk - rec.Tkrk;
 			rec.Luft = rec.Rsr - rec.Psr;
@@ -114,8 +118,17 @@ define(['canvasi', 'underscore'], function (canvasi, _) {
 			rec.Pr = rec.Nkrk / Nkrgrk + rec.Tkrk / Tkrgrk;
 			rec.S = canvasi.taskGraph.getConnectedLinks(rec.element).length;
 			rec.E = canvasi.taskGraph.getConnectedLinks(rec.element, { outbound: true }).length;
-			rec.I = canvasi.taskGraph.getConnectedLinks(rec.element, { inbound: true }).length;
+			rec.I = inboundLinks.length;
 			rec.W = +rec.element.getDescr();
+
+			rec.PAR = [];
+
+			inboundLinks.forEach(function (link) {
+				var target = link.get('source').id,
+					targetElement = canvasi.taskGraph.getCell(target);
+
+				rec.PAR.push(targetElement);
+			});
 		});
 
 		var Sgr = Math.max.apply(Math, _.pluck(data, 'S'));

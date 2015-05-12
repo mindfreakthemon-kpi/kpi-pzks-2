@@ -79,9 +79,31 @@ define(['api/counter', 'underscore', 'toggles/algo'], function (counter, _, algo
 			return _.sortBy(data.list, 'Tkrn');
 		},
 		17: function (data) {
-			return _.filter(data.list, function (rec) {
-				return rec.I === 0;
-			});
+			var list = data.list.slice(0),
+				result = [];
+
+			while (list.length) {
+				list = _.filter(list, function (rec) {
+					var ok = rec.I === 0;
+
+					if (ok) {
+						result.push(rec);
+						return false;
+					}
+
+					if (rec.PAR.every(function (parElem) {
+							return _.findWhere(result, {
+								id: parElem.id
+							})
+						})) {
+						rec.I--;
+					}
+
+					return true;
+				});
+			}
+
+			return result;
 		}
 	};
 
