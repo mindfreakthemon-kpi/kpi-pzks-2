@@ -134,6 +134,9 @@ define(['underscore', 'canvasi', 'toggles/proc', 'functions/cpath'], function (_
 			var n = proc.mode;
 
 			return procs[n](data, taskId);
+		},
+		mode: function () {
+			return proc.mode;
 		}
 	};
 });

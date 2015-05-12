@@ -277,6 +277,20 @@ define(['jquery', 'underscore', 'canvasi', 'functions/cpath', 'api/algo', 'api/p
 			});
 		}
 
+		function allParentTasksAreFinished(taskId) {
+			return _.chain(LINK_QUEUE)
+				.filter(function (link) {
+					return link.target === taskId;
+				})
+				.map(function (link) {
+					return link.source;
+				})
+				.every(function (taskId) {
+					return TASK_FINISHED_SET.has(taskId);
+				})
+				.value();
+		}
+
 		function isChannelLockedByDuplexDisallowed(channelId) {
 			if (DUPLEX_ALLOWED) {
 				return false;
@@ -378,6 +392,17 @@ define(['jquery', 'underscore', 'canvasi', 'functions/cpath', 'api/algo', 'api/p
 				// 5.2.1
 				if (LINK_READY_SET.has(linkId)) {
 					let taskId = link.target;
+
+					// proc
+					if (proc.mode() === '4') {
+						// check if all parent tasks were finished
+						// and proceed only after that
+
+						if (!allParentTasksAreFinished(taskId)) {
+							console.log(taskId);
+							return;
+						}
+					}
 
 					// 5.2.1.1
 					if (!TASK_ASSIGNED_PROC_MAP.has(taskId)) {

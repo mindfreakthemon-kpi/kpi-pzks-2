@@ -120,6 +120,9 @@ define(['api/counter', 'underscore', 'toggles/algo'], function (counter, _, algo
 				data = this.queue(n);
 
 			return comms[n](data);
+		},
+		mode: function () {
+			return algo.mode;
 		}
 	};
 });
