@@ -82,12 +82,6 @@ define(['underscore', 'canvasi', 'toggles/proc', 'functions/cpath'], function (_
 				.value();
 
 			var queue = _.chain(data.PROCESSOR_QUEUE)
-				// sort by links count in asc
-				.sortBy(function (processor) {
-					return canvasi.systemGraph.getConnectedLinks(processor.element).length;
-				})
-				// in desc
-				.reverse()
 				// only free
 				.filter(function (processor) {
 					return isFree(data, taskId, processor.id);
