@@ -114,7 +114,7 @@ define(['underscore', 'canvasi', 'toggles/proc', 'functions/cpath'], function (_
 
 					map.set(procId, sum);
 
-					return sum;
+					return sum + '_' + procId;
 				})
 				.value();
 
