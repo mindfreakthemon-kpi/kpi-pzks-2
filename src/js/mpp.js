@@ -10,9 +10,12 @@ define(['jquery', 'canvasi', 'templates', 'functions/mpp', 'toggles/proc', 'api/
 
 	function generate() {
 		if ($mppBox.hasClass('visible')) {
+			var duplex = confirm('Allow duplex?');
+			var chan_count = Math.max(1, prompt('Physical links count?', '1') | 0);
+			
 			$mppInner.html(templates.mpp(mpp({
 				queue: algo.queue()
-			})));
+			}, duplex, chan_count)));
 		}
 	}
 

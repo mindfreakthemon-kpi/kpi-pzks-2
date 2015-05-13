@@ -25,25 +25,25 @@ define(['joint'], function (joint) {
 		defaults: joint.util.deepSupplement({
 			type: 'ns.Entity',
 			size: {
-				width: 100,
-				height: 100
+				width: 50,
+				height: 50
 			},
 			attrs: {
 				'.outer': {
-					fill: '#2ECC71',
+					fill: '#000001',
 					//stroke: '#27AE60',
 					//'stroke-width': 5,
-					r: 50
+					r: 30
 				},
 				'.inner': {
-					fill: '#2ECC71',
+					fill: '#EDA134',
 					//stroke: '#27AE60',
 					//'stroke-width': 2,
-					r: 50
+					r: 25
 				},
 				'text.title': {
 					text: '???',
-					'font-family': 'Arial',
+					'font-family': 'Verdana',
 					'font-size': 16,
 					ref: '.outer',
 					'ref-x': .5,
@@ -53,7 +53,7 @@ define(['joint'], function (joint) {
 				},
 				'text.descr': {
 					text: '1',
-					'font-family': 'Arial',
+					'font-family': 'Verdana',
 					'font-size': 9,
 					ref: '.outer',
 					'ref-x': .5,

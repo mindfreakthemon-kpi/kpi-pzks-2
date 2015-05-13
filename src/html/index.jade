@@ -1,107 +1,106 @@
 doctype html
 html
 	head
-		title Main page
+		title PZKS Lab 6-7
 		link(rel='stylesheet', href='lib/bootstrap/css/bootstrap.min.css')
 		link(rel='stylesheet', href='lib/bootstrap/css/bootstrap-theme.min.css')
 		link(rel='stylesheet', href='lib/joint/css/joint.min.css')
 		link(rel='stylesheet', href='css/index.css')
 		script(src='lib/requirejs/js/require.js', data-main='js/main.js')
-body
-	#papers
-		.col-xs-6#taskPaper(data-name='task')
-			button.btn.btn-danger.clear(type='button') Clear
-		.col-xs-6#systemPaper(data-name='system')
-			button.btn.btn-danger.clear(type='button') Clear
-
-	#top-utils
-		#mode.btn-group(data-toggle='buttons')
-			label.btn.btn-default.active
-				input(type='radio', name='mode', value='edit', checked)
-				| Edit
-			label.btn.btn-default
-				input(type='radio', name='mode', value='element')
-				| Add
-			label.btn.btn-default
-				input(type='radio', name='mode', value='link')
-				| Link
-		#proc.btn-group(data-toggle='buttons')
-			label.btn.btn-primary
-				input(type='radio', name='proc', value='1')
-				| 1*
-			//label.btn.btn-primary
-			//	input(type='radio', name='proc', value='2')
-			//	| 2
-			//label.btn.btn-primary
-			//	input(type='radio', name='proc', value='3')
-			//	| 3
-			//label.btn.btn-primary
-			//	input(type='radio', name='proc', value='4')
-			//	| 4
-			label.btn.btn-primary.active
-				input(type='radio', name='proc', value='5', checked)
-				| 5*
-		#algo.btn-group(data-toggle='buttons')
-			//label.btn.btn-primary
-			//	input(name='algo', type='radio', value='1')
-			//	| 1
-			label.btn.btn-primary.active
-				input(name='algo', type='radio', value='2', checked)
-				| 2*
-			//label.btn.btn-primary
-			//	input(name='algo', type='radio', value='3')
-			//	| 3
-			//label.btn.btn-primary
-			//	input(name='algo', type='radio', value='7')
-			//	| 7
-			label.btn.btn-primary
-				input(name='algo', type='radio', value='9')
-				| 9*
-			//label.btn.btn-primary
-			//	input(name='algo', type='radio', value='10')
-			//	| 10
-			label.btn.btn-primary
-				input(name='algo', type='radio', value='11')
-				| 11*
-			//label.btn.btn-primary
-			//	input(name='algo', type='radio', value='16')
-			//	| 16
-			//label.btn.btn-primary
-			//	input(name='algo', type='radio', value='17')
-			//	| 17
-		.btn-group
-			button.btn.btn-primary#check(type='button') Check
-		.btn-group
-			button.btn.btn-info#generate(type='button') Generate
-		.btn-group
-			button.btn.btn-info#mpp(type='button') MPP
-		.btn-group
-			button.btn.btn-info#stat(type='button') STAT
-		.btn-group
-			button.btn.btn-success#save(type='button') Save
-			div(style='position: relative; float: left;')
-				button.btn.btn-primary(type='button') Load
-				input#load(type='file')
-		.btn-group
-			button.btn.btn-danger#clear(type='button') Clear All
-
-	#mpp-box
-		.row-fluid
-			.col-xs-10
-				button.btn.btn-large.btn-danger#mpp-generate(type='button') Generate
-			.col-xs-2
-				.form-group
-					label(for='mpp-proc-multi') Processor multiplier
-					input.form-control(type='number', id='mpp-proc-multi', min=0.25, step=0.25, max=8, value=1, required)
-				.form-group
-					label(for='mpp-phys-links') Physical links
-					input.form-control(type='number', id='mpp-phys-links', min=1, step=1, max=1000, value=1, required)
-				.form-group
-					label Duplex connectivity: #{''}
-						input(type='checkbox', id='mpp-duplex', checked)
-		#mpp-inner
-
-	#stat-box
+	body
+		#papers
+			#top-utils-box.col-xs-2
+				ul#top-utils.nav.nav-pills.nav-stacked
+					li#mode.btn-group.btn-group-vertical(data-toggle='buttons')
+						label.btn.btn-warning.active
+							input(type='radio', name='mode', value='move', checked)
+							| Move Element
+						label.btn.btn-warning
+							input(type='radio', name='mode', value='element')
+							| Add Element
+						label.btn.btn-warning
+							input(type='radio', name='mode', value='link')
+							| Add Link
+						label.btn.btn-warning
+							input(type='radio', name='mode', value='edit')
+							| Edit Element
+					li#proc.btn-group.btn-group-vertical(data-toggle='buttons')
+						//label.btn.btn-primary
+						//    input(type='radio', name='proc', value='1')
+						//    | 1*
+						//label.btn.btn-primary
+						//	input(type='radio', name='proc', value='2')
+						//	| 2
+						label.btn.btn-warning
+							input(type='radio', name='proc', value='3')
+							| 6 Lab - 3
+						label.btn.btn-warning
+							input(type='radio', name='proc', value='4', checked)
+							| 7 Lab - 4
+						//label.btn.btn-primary.active
+						//    input(type='radio', name='proc', value='5', checked)
+						//    | 5*
+					li#algo.btn-group.btn-group-vertical(data-toggle='buttons')
+						//label.btn.btn-primary
+						//	input(name='algo', type='radio', value='1')
+						//	| 1
+						label.btn.btn-warning.active
+							input(name='algo', type='radio', value='2', checked)
+							| 2 Lab - 2
+						//label.btn.btn-primary
+						//	input(name='algo', type='radio', value='3')
+						//	| 3
+						label.btn.btn-warning
+							input(name='algo', type='radio', value='7')
+							| 3 Lab - 7
+						//label.btn.btn-primary
+						//    input(name='algo', type='radio', value='9')
+						//    | 9*
+						//label.btn.btn-primary
+						//	input(name='algo', type='radio', value='10')
+						//	| 10
+						//label.btn.btn-primary
+						//    input(name='algo', type='radio', value='11')
+						//    | 11*
+						//label.btn.btn-primary
+						//	input(name='algo', type='radio', value='16')
+						//	| 16
+						label.btn.btn-warning
+							input(name='algo', type='radio', value='17')
+							| 4 Lab - 17
+					//.btn-group
+					//    button.btn.btn-primary#check(type='button') Check Graph
+					.btn-group.btn-group-vertical
+						button.btn.btn-warning#generate(type='button') Generate Graph
+					.btn-group.btn-group-vertical
+						button.btn.btn-warning#mpp(type='button') Gants Diagram
+					.btn-group.btn-group-vertical
+						button.btn.btn-warning#save(type='button') Save Graph
+						div(style='position: relative; float: left; width: 100%;')
+							button.btn.btn-warning(type='button', style='width: 100%;') Load Graph
+							input#load(type='file')
+					.btn-group.btn-group-vertical
+						button.btn.btn-warning#clear(type='button') Clear Graphs
+			.col-xs-5#taskPaper(data-name='Task Graph')
+				//button.btn.btn-danger.clear(type='button') Clear
+			.col-xs-5#systemPaper(data-name='System Graph')
+				//button.btn.btn-danger.clear(type='button') Clear
+		#mpp-box
+			.row-fluid
+				.col-xs-12
+					button.btn.btn-large.btn-warning#mpp-generate(type='button') Run
+				//.col-xs-2
+				//	.form-group
+				//		label(for='mpp-proc-multi') CPU power
+				//		input.form-control(type='number', id='mpp-proc-multi', min=0.25, step=0.25, max=8, value=1, required)
+				//	.form-group
+				//		label(for='mpp-phys-links') Physical links
+				//		input.form-control(type='number', id='mpp-phys-links', min=1, step=1, max=10, value=1, required)
+				//	.form-group
+				//		label Duplex: #{''}
+				//			input(type='checkbox', id='mpp-duplex', checked)
+			#mpp-inner
+		#stat-box
 		.row-fluid
 			.col-xs-4
 				.row
@@ -156,5 +155,5 @@ body
 				progress#stat-progress(style='width: 100%')
 		#stat-inner
 
-	#editor
-	#generate-box
+		#editor
+		#generate-box

@@ -4,7 +4,7 @@ define(['jquery', 'joint', 'toggles/mode', 'api/storage', 'shapes'], function ($
 			return mode.mode === 'link';
 		}
 
-		return mode.mode === 'edit';
+		return mode.mode === 'move';
 	}
 
 	var taskGraph = new joint.dia.Graph(),

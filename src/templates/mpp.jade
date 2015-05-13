@@ -1,16 +1,36 @@
 .row-fluid
-	.col-xs-12
-		h4 Task queue
-		pre.code= tasks.map(function (task) { return task.number; }).join(', ')
-
+	h1
+		if duplex
+			| Duplex allowed!
+		else
+			| Duplex NOT allowed!
+	h2 Physical links count: #{chan_physical_links}
 .row-fluid
-	.col-xs-12
-		h4 Processor queue
-		pre.code= processors.map(function (task) { return task.number; }).join(', ')
+	.col-xs-6
+		pre.code= 'Task queue: ' + tasks.map(function (task) { return task.number; }).join(', ')
+	.col-xs-6
+		pre.code= 'Processor queue: ' + processors.map(function (task) { return task.number; }).join(', ')
+
+if invarianting.length
+	.row-fluid
+		.col-xs-12
+			table.table.table-bordered.table-striped.table-hover
+				each invariant in invarianting
+					tr
+						th
+							= tasks[invariant.taskId].number
+						td
+							each processor in processors
+								if invariant.map.has(processor.id)
+									| &nbsp;
+									= processor.number
+									|  (#{invariant.map.get(processor.id)})
+									| &nbsp; &nbsp;
+
+
 .row-fluid
 	.col-xs-4
 		table.table.table-bordered.table-striped.table-hover
-			caption Processors
 			tr
 				th(width='50') #
 				each processor in processorsHeader
@@ -30,47 +50,35 @@
 								| &mdash;
 	.col-xs-8
 		table.table.table-bordered.table-striped.table-hover
-			caption Channels
 			tr
 				th(width='50') #
-				each channel in channelsHeader
+				each double in channelsHeader
+					- var channel = double.direct
 					- var sourceProcessor = processors[channel.source]
 					- var targetProcessor = processors[channel.target]
-					th #{sourceProcessor.number} => #{targetProcessor.number} #{''}
-						sup #{channel.id}
+					th #{sourceProcessor.number} <=> #{targetProcessor.number}
 			each state in states
 				tr
 					td= state.row + 1
-					each channel in channelsHeader
-						- var linkId = state.channels.get(channel.id)
+					each double in channelsHeader
+						- var channelDirect = double.direct
+						- var channelInverse = double.inverse
+
+						- var linkIdDirect = state.channels.get(channelDirect.id)
+						- var linkIdInverse = state.channels.get(channelInverse.id)
 						td
-							if linkId !== undefined
-								- var link = links[linkId]
+							if linkIdDirect !== undefined
+								- var link = links[linkIdDirect]
 								- var sourceLink = tasks[link.source]
 								- var targetLink = tasks[link.target]
-								| #{sourceLink.number} #{''}
-								sup #{link.source}
-								| #{''}
-								| => #{targetLink.number} #{''}
-								sup #{link.target}
-							else
-								| &mdash;
-
-if invarianting.length
-	.row-fluid
-		.col-xs-12
-			table.table.table-bordered.table-striped.table-hover
-				caption Processor assignments invariants
-				each invariant in invarianting
-					tr
-						th
-							= tasks[invariant.taskId].number
-						td
-							each processor in processors
-								if invariant.map.has(processor.id)
-									| &nbsp;
-									= processor.number
-									|  (#{invariant.map.get(processor.id)})
-									| &nbsp; &nbsp;
+								| #{sourceLink.number} => #{targetLink.number} #{''}
+								| (#{processors[channelDirect.source].number} => #{processors[channelDirect.target].number})
+							br
+							if linkIdInverse !== undefined
+								- var link = links[linkIdInverse]
+								- var sourceLink = tasks[link.source]
+								- var targetLink = tasks[link.target]
+								| #{sourceLink.number} => #{targetLink.number} #{''}
+								| (#{processors[channelInverse.source].number} => #{processors[channelInverse.target].number})
 
 

@@ -64,8 +64,8 @@ define(['jquery', 'canvasi', 'toggles/mode', 'underscore'], function ($, canvasi
 			_link.label(0, {
 				position: .5,
 				attrs: {
-					rect: { fill: 'white' },
-					text: { fill: 'blue', text: '1' }
+					rect: { fill: 'grey' },
+					text: { fill: 'orange', text: '1' }
 				}
 			});
 

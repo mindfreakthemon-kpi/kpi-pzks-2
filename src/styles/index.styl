@@ -2,6 +2,7 @@ html, body {
 	height: 100%;
 	margin: 0;
 	padding: 0;
+	background: #807752;
 }
 
 sup {
@@ -10,14 +11,12 @@ sup {
 
 #papers {
 	height: 100%;
-	padding-top: 50px;
 
 	.clear {
 		position: absolute;
 		bottom: 0;
 		right: 0;
-
-		border: 2px dashed #eee;
+		border: 2px dashed #EDA134;
 	}
 }
 
@@ -25,18 +24,19 @@ sup {
 #systemPaper {
 	height: 100%;
 	z-index: 1;
-	border: 5px dashed #ccc;
+	border: 5px solid #808080;
 	position: relative;
 	&:after {
 		content: attr(data-name);
 		display: inline-block;
-
 		position: absolute;
-		top: 0;
+		bottom: 0;
 		left: 0;
-		font-size: 30px;
+		width: 100%;
+		text-align: center;
+		font-size: 25px;
+    font-style: italic;
 		font-weight: bold;
-		border: 2px dashed #eee;
 	}
 }
 
@@ -67,9 +67,9 @@ sup {
 	width: 300px;
 	min-height: 100px;
 	position: absolute;
-	background: #5affcc;
-	top: 20px;
-	right: 0;
+    background: #EDA134;
+    top: 40%;
+    right: 40%;
 	z-index: 2;
 	display: none;
 	padding: 10px 0 0;
@@ -102,17 +102,22 @@ sup {
 	}
 }
 
+#top-utils-box {
+	height: 100%;
+}
+
 #top-utils {
 	position: absolute;
 	top: 0;
 	left: 0;
-	background: #807752;
 	width: 100%;
 	padding: 10px;
 	text-align: center;
 
 	.btn-group {
-		margin: 0 5px;
+		margin: 10px 5px 0;
+		overflow: hidden;
+		width: 100%;
 	}
 }
 
@@ -135,10 +140,9 @@ sup {
 #mpp-box {
 	display: none;
 	position: absolute;
-	top: 60px;
-	left: 0;
+	top: 0;
+	left: 17%;
 	right: 0;
-	bottom: 0;
 	z-index: 2;
 	background: #fff;
 

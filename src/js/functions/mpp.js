@@ -1,7 +1,7 @@
 define(['jquery', 'underscore', 'canvasi', 'functions/cpath', 'api/proc'], function ($, _, canvasi, cpath, proc) {
 	'use strict';
 
-	return function (data) {
+	return function (data, DUPLEX_ALLOWED, CHAN_PHYSICAL_LINKS) {
 		data = data || {};
 		//////////////////////////////////////////////////////
 		var INVARIANTING_ARRAY = [];
@@ -18,13 +18,13 @@ define(['jquery', 'underscore', 'canvasi', 'functions/cpath', 'api/proc'], funct
 		var CHAN_ASSIGNED_LINK_MAP = new Map();
 		var CHAN_ASSIGNED_LINK_TEMP_MAP = new Map();
 		var CHAN_COUNTERS_MAP = {};
-		var CHAN_PHYSICAL_LINKS = $('#mpp-phys-links').val() | 0;
+		//var CHAN_PHYSICAL_LINKS = $('#mpp-phys-links').val() | 0;
 
 		var PROC_ASSIGNED_TASK_MAP = new Map();
 		var PROC_COUNTERS_MAP = {};
 		var PROC_PASSIVE_COUNTERS_MAP = {};
-		var PROC_MULTIPLIER = parseFloat($('#mpp-proc-multi').val());
-		var DUPLEX_ALLOWED = $('#mpp-duplex').is(':checked');
+		var PROC_MULTIPLIER = 1;//parseFloat($('#mpp-proc-multi').val());
+		//var DUPLEX_ALLOWED = $('#mpp-duplex').is(':checked');
 		//////////////////////////////////////////////////////
 
 
@@ -319,7 +319,7 @@ define(['jquery', 'underscore', 'canvasi', 'functions/cpath', 'api/proc'], funct
 				let _neighbors = [];
 
 				neighbors.forEach(function (channelId) {
-					var inverseChannelId = findNeighborChannelIdsByChannelId(channelId);
+					var inverseChannelId = findInverseChannelByChannelId(channelId);
 
 					if (_neighbors.indexOf(channelId) === -1 &&
 						_neighbors.indexOf(inverseChannelId) === -1) {
@@ -582,12 +582,35 @@ define(['jquery', 'underscore', 'canvasi', 'functions/cpath', 'api/proc'], funct
 		}
 
 
+		var unique = [],
+			doubles = [];
+
+		CHAN_QUEUE.forEach(function (channel, channelId) {
+			var inverseChannelId = findInverseChannelByChannelId(channelId);
+
+			if (unique.indexOf(channelId) === -1 &&
+				unique.indexOf(inverseChannelId) === -1) {
+				unique.push(channelId);
+				doubles.push({ direct: channelId, inverse: inverseChannelId });
+			}
+		});
+
 		return {
+			duplex: DUPLEX_ALLOWED,
+			chan_physical_links: CHAN_PHYSICAL_LINKS,
+
 			invarianting: INVARIANTING_ARRAY,
 			states: STATES,
 
 			processorsHeader: _.chain(PROCESSOR_QUEUE.slice(0)).sortBy('number').value(),
-			channelsHeader: _.chain(CHAN_QUEUE.slice(0)).sortBy(function (channel) { return PROCESSOR_QUEUE[channel.source].number + '_' + PROCESSOR_QUEUE[channel.source].target; }).value(),
+			channelsHeader: _.chain(doubles)
+				.map(function (double) {
+					return {
+						direct: CHAN_QUEUE[double.direct],
+						inverse: CHAN_QUEUE[double.inverse]
+					};
+				})
+				.value(),
 
 			processors: PROCESSOR_QUEUE,
 			channels: CHAN_QUEUE,
