@@ -181,9 +181,9 @@ define(['jquery', 'underscore', 'canvasi', 'functions/cpath', 'api/algo', 'api/p
 				.filter(function (channel) {
 					return channel.id !== channelId && (
 							channel.source === _channel.source ||
-							channel.target === _channel.source/* ||
+							channel.target === _channel.source ||
 							channel.source === _channel.target ||
-							channel.target === _channel.target*/
+							channel.target === _channel.target
 						);
 				})
 				.map(function (channel) {
@@ -313,6 +313,20 @@ define(['jquery', 'underscore', 'canvasi', 'functions/cpath', 'api/algo', 'api/p
 					// channel is using duplex slot, so it's ok
 					return false;
 				}
+
+				// filter out duplexes
+				let _neighbors = [];
+
+				neighbors.forEach(function (channelId) {
+					var inverseChannelId = findNeighborChannelIdsByChannelId(channelId);
+
+					if (_neighbors.indexOf(channelId) === -1 &&
+						_neighbors.indexOf(inverseChannelId) === -1) {
+						_neighbors.push(channelId);
+					}
+				})
+
+				neighbors = _neighbors;
 			}
 
 			return neighbors.length >= CHAN_PHYSICAL_LINKS;

@@ -110,7 +110,12 @@ define(['underscore', 'canvasi', 'toggles/proc', 'functions/cpath'], function (_
 
 						var path = cpath(data.SYSTEM_MATRIX, sourceProcId, procId);
 
-						sum += (path.length - 1) * data.TASK_QUEUE[parentTaskId].weight;
+						var link = _.findWhere(data.LINK_QUEUE, {
+							source: parentTaskId,
+							target: taskId
+						});
+
+						sum += (path.length - 1) * link.weight;
 					});
 
 					map.set(procId, sum);
