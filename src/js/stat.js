@@ -43,6 +43,8 @@ define(['jquery', 'canvasi', 'templates', 'api/generate', 'api/counter', 'functi
 			return;
 		}
 
+		var PROC_COUNT = canvasi.systemGraph.getElements().length;
+
 		$statGen.attr('disabled', 'true');
 
 		var TASKS_MIN = parseInt($("#stat-tasks-min").val(), 10),
@@ -86,7 +88,7 @@ define(['jquery', 'canvasi', 'templates', 'api/generate', 'api/counter', 'functi
 					var results = mpp();
 
 					var Ky = results.states.length / counts.Tmin,
-						Ke = Ky / 2,
+						Ke = Ky / PROC_COUNT,
 						Kae = Ky / counts.Tkrgrk;
 
 					E_Ky += Ky;
