@@ -87,7 +87,7 @@ define(['jquery', 'canvasi', 'templates', 'api/generate', 'api/counter', 'functi
 					var counts = counter();
 					var results = mpp();
 
-					var Ky = results.states.length / counts.Tmin,
+					var Ky = counts.Tmin / results.states.length,
 						Ke = Ky / PROC_COUNT,
 						Kae = Ky / counts.Tkrgrk;
 
