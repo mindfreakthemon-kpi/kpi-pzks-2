@@ -100,11 +100,13 @@ define(['canvasi', 'underscore'], function (canvasi, _) {
 		var Nkrgrn = Math.max.apply(Math, _.pluck(data, 'Nkrn'));
 		var Tkrgrn = Math.max.apply(Math, _.pluck(data, 'Tkrn'));
 
-		var Nmin = Math.round(_.reduce(_.map(data, function (rec) {
-			return rec.element.getDescr();
+		var Tmin = _.reduce(_.map(data, function (rec) {
+			return parseInt(rec.element.getDescr(), 10);
 		}), function (memo, num) {
 			return memo + num;
-		}) / Tkrgrk);
+		});
+
+		var Nmin = Math.round(Tmin / Tkrgrk);
 
 		_.each(data, function (rec) {
 			var inboundLinks = canvasi.taskGraph.getConnectedLinks(rec.element, { inbound: true });
@@ -140,6 +142,7 @@ define(['canvasi', 'underscore'], function (canvasi, _) {
 			Tkrgrk: Tkrgrk,
 			Nkrgrn: Nkrgrn,
 			Tkrgrn: Tkrgrn,
+			Tmin: Tmin,
 			Sgr: Sgr
 		};
 	};

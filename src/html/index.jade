@@ -76,6 +76,8 @@ body
 		.btn-group
 			button.btn.btn-info#mpp(type='button') MPP
 		.btn-group
+			button.btn.btn-info#stat(type='button') STAT
+		.btn-group
 			button.btn.btn-success#save(type='button') Save
 			div(style='position: relative; float: left;')
 				button.btn.btn-primary(type='button') Load
@@ -98,6 +100,61 @@ body
 					label Duplex connectivity: #{''}
 						input(type='checkbox', id='mpp-duplex', checked)
 		#mpp-inner
+
+	#stat-box
+		.row-fluid
+			.col-xs-4
+				.row
+					.col-xs-4
+						.form-group
+							label Task Nmin
+							input.form-control(type='number', id='stat-tasks-min', min=1, step=1, max=100, value=1, required)
+					.col-xs-4
+						.form-group
+							label Task Max
+							input.form-control(type='number', id='stat-tasks-max', min=1, step=1, max=100, value=10, required)
+					.col-xs-4
+						.form-group
+							label Task Step
+							input.form-control(type='number', id='stat-tasks-step', min=1, step=1, max=100, value=1, required)
+
+			.col-xs-4
+				.row
+					.col-xs-4
+						.form-group
+							label Connectivity Min
+							input.form-control(type='number', id='stat-conn-min', min=0.01, step=0.01, max=1, value=0.1, required)
+					.col-xs-4
+						.form-group
+							label Connectivity Max
+							input.form-control(type='number', id='stat-conn-max', min=0.01, step=0.01, max=1, value=1, required)
+					.col-xs-4
+						.form-group
+							label Connectivity Step
+							input.form-control(type='number', id='stat-conn-step', min=0.01, step=0.01, max=1, value=0.1, required)
+
+			.col-xs-3
+				.row
+					.col-xs-6
+						.form-group
+							label Task Weight
+							input.form-control(type='number', id='stat-weight-min', min=1, step=1, max=100, value=1, required)
+					.col-xs-6
+						.form-group
+							label Task Weight
+							input.form-control(type='number', id='stat-weight-max', min=1, step=1, max=100, value=10, required)
+
+			.col-xs-1
+				.form-group
+					label N
+					input.form-control(type='number', id='stat-n', min=1, step=1, max=100, value=1, required)
+				.form-group
+					button.btn.btn-large.btn-danger#stat-generate(type='button') Generate
+
+		.row-fluid
+			.col-xs-12(style='text-align: center')
+				progress#stat-progress(style='width: 100%')
+		#stat-inner
 
 	#editor
 	#generate-box

@@ -41,6 +41,7 @@ require({
 			'functions/checker',
 			'functions/fs',
 			'functions/generate',
-			'mpp'
+			'mpp',
+			'stat'
 		]
 	});

@@ -1,0 +1,23 @@
+
+.row-fluid
+	.col-xs-12
+		table.table.table-bordered.table-striped.table-hover
+			caption Statistics
+			tr
+				th Queue
+				th Load
+				th Task N
+				th Conn
+				th Ky
+				th Ke
+				th Kae
+			each row in table
+				tr
+					each cell in row
+						td= cell
+
+
+.row-fluid
+	.col-xs-12
+		a.btn.btn-danger(download='data.csv', href='data:text/csv;base64,' + csv) Download
+
