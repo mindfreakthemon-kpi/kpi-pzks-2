@@ -112,7 +112,7 @@ define(['jquery', 'canvasi', 'templates', 'api/generate', 'api/counter', 'functi
 		$statProgress.attr('max', ROWS.length);
 
 		function curses(i) {
-			$statProgress.attr('value', i);
+			$statProgress.attr('value', i + 1);
 
 			step.apply(this, ROWS[i]);
 
