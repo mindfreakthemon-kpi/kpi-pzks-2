@@ -99,11 +99,11 @@ define(['jquery', 'canvasi', 'templates', 'api/generate', 'api/counter', 'functi
 			TABLE.push([algo, proc, TASK_N, CONN_N, E_Ky / TIMES, E_Ke / TIMES, E_Kae / TIMES]);
 		}
 
-		procValues.forEach(function (proc) {
-			algoValues.forEach(function (algo) {
+		algoValues.forEach(function (algo) {
+			procValues.forEach(function (proc) {
 				TASKS_RANGE.forEach(function (TASK_N) {
 					CONN_RANGE.forEach(function (CONN_N) {
-						ROWS.push([proc, algo, TASK_N, CONN_N]);
+						ROWS.push([algo, proc, TASK_N, CONN_N]);
 					});
 				});
 			});
