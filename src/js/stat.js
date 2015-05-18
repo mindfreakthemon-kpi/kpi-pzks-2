@@ -17,11 +17,11 @@ define(['jquery', 'canvasi', 'templates', 'api/generate', 'api/counter', 'functi
 				return $.map(line, function (v) {
 					v = ('' + v).replace(/"/g, '""');
 
-					//if (v.search(/("|,|\n)/g) >= 0) {
-					//	v = '"' + v + '"';
-					//}
+					if (v.search(/("|,|\n)/g) >= 0) {
+						v = '"' + v + '"';
+					}
 
-					v = '"=""' + v + '"""';
+					//v = '"=""' + v + '"""';
 
 					return v;
 				}).join(',');
