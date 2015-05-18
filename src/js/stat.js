@@ -5,13 +5,15 @@ define(['jquery', 'canvasi', 'templates', 'api/generate', 'api/counter', 'functi
 		$statProgress = $('#stat-progress'),
 		$statInner = $('#stat-inner');
 
+	var CSV = null;
+
 	var $procInputs = $("#proc :input"),
 		procValues = _.map($procInputs, function (el) { return el.value; });
 	var $algoInputs = $("#algo :input"),
 		algoValues = _.map($algoInputs, function (el) { return el.value; });
 
 	function generateCSV(data) {
-		return $.map(data, function (line) {
+		return '\uFEFF' + $.map(data, function (line) {
 				return $.map(line, function (v) {
 					v = ('' + v).replace(/"/g, '""');
 
@@ -117,9 +119,10 @@ define(['jquery', 'canvasi', 'templates', 'api/generate', 'api/counter', 'functi
 			step.apply(this, ROWS[i]);
 
 			if (++i >= ROWS.length) {
+				CSV = generateCSV(TABLE);
+
 				$statInner.html(templates.stat({
-					table: TABLE,
-					csv: btoa(generateCSV(TABLE))
+					table: TABLE
 				}));
 
 				$statGen.removeAttr('disabled');
@@ -134,4 +137,16 @@ define(['jquery', 'canvasi', 'templates', 'api/generate', 'api/counter', 'functi
 	}
 
 	$statGen.on('click', iterate);
+	$statBox.on('click', '#stat-download', function () {
+		var blob = new Blob([CSV]),
+			a = document.createElement('a');
+
+		var wrapperURL = (window.URL || window.webkitURL),
+			url = wrapperURL.createObjectURL(blob),
+			event = new MouseEvent('click');
+
+		a.download = 'data.csv';
+		a.href = url;
+		a.dispatchEvent(event);
+	});
 });
