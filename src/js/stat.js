@@ -25,7 +25,7 @@ define(['jquery', 'canvasi', 'templates', 'api/generate', 'api/counter', 'functi
 
 					return v;
 				}).join(',');
-			}).join('\n');
+			}).join('\r\n');
 	}
 
 	function setInputChecked($inputs, value) {
