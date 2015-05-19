@@ -93,7 +93,7 @@ define(['jquery', 'canvasi', 'templates', 'api/generate', 'api/counter', 'functi
 
 					var Ky = counts.Tmin / results.states.length,
 						Ke = Ky / PROC_COUNT,
-						Kae = Ky / counts.Tkrgrk;
+						Kae = counts.Tkrgrk / results.states.length;
 
 					E_Ky += Ky;
 					E_Ke += Ke;
