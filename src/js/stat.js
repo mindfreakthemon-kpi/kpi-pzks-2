@@ -1,4 +1,4 @@
-define(['jquery', 'canvasi', 'templates', 'api/generate', 'api/counter', 'functions/mpp', 'async'], function ($, canvasi, templates, generate, counter, mpp, async) {
+define(['jquery', 'canvasi', 'templates', 'api/generate', 'api/counter', 'api/algo', 'api/proc', 'functions/mpp', 'async'], function ($, canvasi, templates, generate, counter, apiAlgo, apiProc, mpp, async) {
 	var $stat = $('#stat'),
 		$statBox = $('#stat-box'),
 		$statGen = $('#stat-generate'),
@@ -8,9 +8,13 @@ define(['jquery', 'canvasi', 'templates', 'api/generate', 'api/counter', 'functi
 	var CSV = null;
 
 	var $procInputs = $("#proc :input"),
-		procValues = _.map($procInputs, function (el) { return el.value; });
+		procValues = _.map($procInputs, function (el) {
+			return el.value;
+		});
 	var $algoInputs = $("#algo :input"),
-		algoValues = _.map($algoInputs, function (el) { return el.value; });
+		algoValues = _.map($algoInputs, function (el) {
+			return el.value;
+		});
 
 	function generateCSV(data) {
 		return '\uFEFF' + $.map(data, function (line) {
@@ -32,7 +36,8 @@ define(['jquery', 'canvasi', 'templates', 'api/generate', 'api/counter', 'functi
 		$inputs
 			.removeAttr('checked')
 			.filter('[value=' + value + ']')
-			.attr('checked', 'true');
+			.attr('checked', 'true')
+			.trigger('change');
 	}
 
 	$stat
@@ -68,98 +73,93 @@ define(['jquery', 'canvasi', 'templates', 'api/generate', 'api/counter', 'functi
 
 		var TIMES = parseInt($('#stat-n').val(), 10);
 
-		var TABLE = [],
-			ROWS = [];
+		var TABLE = [];
 
 		var I = 0,
-			TOTAL = algoValues.length * procValues.length * TASKS_RANGE.length * CONN_RANGE.length * TIMES;
+			TOTAL = TASKS_RANGE.length * CONN_RANGE.length * TIMES;
+
+		var DATA_MAP = {};
 
 		$statProgress.attr('max', TOTAL);
 
-		function step(algo, proc, TASK_N, CONN_N, graphs) {
-			setInputChecked($procInputs, proc);
-			setInputChecked($algoInputs, algo);
-
-			var E_Ky = 0,
-				E_Ke = 0,
-				E_Kae = 0;
-
-			graphs
-				.forEach(function (graph) {
-					canvasi.taskGraph.fromJSON(graph);
-
-					var counts = counter();
-					var results = mpp();
-
-					var Ky = counts.Tmin / results.states.length,
-						Ke = Ky / PROC_COUNT,
-						Kae = counts.Tkrgrk / results.states.length;
-
-					E_Ky += Ky;
-					E_Ke += Ke;
-					E_Kae += Kae;
-				});
-
-			TABLE.push([algo, proc, TASK_N, CONN_N, E_Ky / TIMES, E_Ke / TIMES, E_Kae / TIMES]);
-		}
-
 		var _tasks = [];
 
-		algoValues.forEach(function (algo) {
-			procValues.forEach(function (proc) {
-				TASKS_RANGE.forEach(function (TASK_N) {
-					CONN_RANGE.forEach(function (CONN_N) {
-
+		TASKS_RANGE.forEach(function (TASK_N) {
+			CONN_RANGE.forEach(function (CONN_N) {
+				_.range(TIMES)
+					.forEach(function () {
 						_tasks.push(function (callback) {
-							var graphs = [];
+							$statProgress.attr('value', ++I);
 
-							_.range(TIMES)
-								.forEach(function () {
-									$statProgress.attr('value', ++I);
+							generate.generateGraph(
+								WEIGHT_MIN,
+								WEIGHT_MAX,
+								TASK_N,
+								CONN_N,
+								1);
 
-									generate.generateGraph(
-										WEIGHT_MIN,
-										WEIGHT_MAX,
-										TASK_N,
-										CONN_N,
-										1);
+							algoValues.forEach(function (algo) {
+								setInputChecked($algoInputs, algo);
 
-									graphs.push(canvasi.taskGraph.toJSON());
+								var counts = counter(),
+									queue = apiAlgo.algos[algo](counts);
+
+								procValues.forEach(function (proc) {
+									setInputChecked($procInputs, proc);
+
+									var results = mpp({
+										queue: queue
+									});
+
+									var Ky = counts.Tmin / results.states.length,
+										Ke = Ky / PROC_COUNT,
+										Kae = counts.Tkrgrk / results.states.length;
+
+									var key = algo + '_' + proc + '_' + TASK_N + '_' + CONN_N;
+
+									if (!DATA_MAP[key]) {
+										DATA_MAP[key] = {
+											Ky: 0,
+											Ke: 0,
+											Kae: 0
+										};
+									}
+
+									DATA_MAP[key].Ky += Ky;
+									DATA_MAP[key].Ke += Ke;
+									DATA_MAP[key].Kae += Kae;
 								});
+							});
 
-							ROWS.push([algo, proc, TASK_N, CONN_N, graphs]);
-
-							setTimeout(callback.bind(this, null));
+							setTimeout(callback.bind(this, null), 0);
 						});
 					});
-				});
 			});
 		});
 
-		function curses(i) {
-			$statProgress.attr('value', i + 1);
-
-			step.apply(this, ROWS[i]);
-
-			if (++i >= ROWS.length) {
-				CSV = generateCSV(TABLE);
-
-				$statInner.html(templates.stat({
-					table: TABLE
-				}));
-
-				$statGen.removeAttr('disabled');
-
-				return;
-			}
-
-			setTimeout(curses.bind(this, i), 0);
-		}
 
 		async.series(_tasks, function () {
-			$statProgress.attr('max', ROWS.length);
+			$statProgress.attr('max', TOTAL);
+			$statGen.removeAttr('disabled');
 
-			curses(0);
+			Object.keys(DATA_MAP)
+				.forEach(function (key) {
+					var split = key.split('_'),
+						algo = split[0],
+						proc = split[1],
+						TASK_N = split[2],
+						CONN_N = split[3],
+						val = DATA_MAP[key];
+
+					TABLE.push([algo, proc, TASK_N, CONN_N, val.Ky / TIMES, val.Ke / TIMES, val.Kae / TIMES]);
+				});
+
+
+			CSV = generateCSV(TABLE);
+
+			$statInner.html(templates.stat({
+				table: TABLE
+			}));
 		});
 	}
 

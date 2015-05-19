@@ -1,4 +1,4 @@
-define(['jquery', 'canvasi', 'templates', 'functions/mpp', 'toggles/proc'], function ($, canvasi, templates, mpp, proc) {
+define(['jquery', 'canvasi', 'templates', 'functions/mpp', 'toggles/proc', 'api/algo'], function ($, canvasi, templates, mpp, proc, algo) {
 	var $mpp = $('#mpp'),
 		$mppBox = $('#mpp-box'),
 		$mppInner = $('#mpp-inner');
@@ -10,7 +10,9 @@ define(['jquery', 'canvasi', 'templates', 'functions/mpp', 'toggles/proc'], func
 
 	function generate() {
 		if ($mppBox.hasClass('visible')) {
-			$mppInner.html(templates.mpp(mpp()));
+			$mppInner.html(templates.mpp(mpp({
+				queue: algo.queue()
+			})));
 		}
 	}
 

@@ -1,52 +1,4 @@
 define(['api/counter', 'underscore', 'toggles/algo'], function (counter, _, algo) {
-	var comms = {
-		1: function (data) {
-			return _.map(data, function (rec) {
-				return rec.element.getTitle() + ' (' + rec.Pr.toFixed(2) + ')';
-			});
-		},
-		2: function (data) {
-			return _.map(data, function (rec) {
-				return rec.element.getTitle() + ' (' + rec.Luft + ')';
-			});
-		},
-		3: function (data) {
-			return _.map(data, function (rec) {
-				return rec.element.getTitle() + ' (' + rec.Tkrk + ')';
-			});
-		},
-		7: function (data) {
-			return _.map(data, function (rec) {
-				return rec.element.getTitle() + ' (' + rec.Nkrn + '; ' + rec.S + ')';
-			});
-		},
-		9: function (data) {
-			return _.map(data, function (rec) {
-				return rec.element.getTitle() + ' (' + rec.Nkrn + ')';
-			});
-		},
-		10: function (data) {
-			return _.map(data, function (rec) {
-				return rec.element.getTitle() + ' (' + rec.S + '; ' + rec.Nkrk + ')';
-			});
-		},
-		11: function (data) {
-			return _.map(data, function (rec) {
-				return rec.element.getTitle() + ' (' + rec.S + '; ' + rec.Nkrn + ')';
-			});
-		},
-		16: function (data) {
-			return _.map(data, function (rec) {
-				return rec.element.getTitle() + ' (' + rec.Tkrn + ')';
-			});
-		},
-		17: function (data) {
-			return _.map(data, function (rec) {
-				return rec.element.getTitle();
-			});
-		}
-	};
-	
 	var algos = {
 		1: function (data) {
 			return _.sortBy(data.list, 'Pr').reverse();
@@ -114,12 +66,6 @@ define(['api/counter', 'underscore', 'toggles/algo'], function (counter, _, algo
 				n = alNum || algo.mode;
 
 			return algos[n](data);
-		},
-		queueText: function (alNum) {
-			var n = alNum || algo.mode,
-				data = this.queue(n);
-
-			return comms[n](data);
 		},
 		mode: function () {
 			return algo.mode;

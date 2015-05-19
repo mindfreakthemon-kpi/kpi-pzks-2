@@ -95,7 +95,7 @@ body
 					input.form-control(type='number', id='mpp-proc-multi', min=0.25, step=0.25, max=8, value=1, required)
 				.form-group
 					label(for='mpp-phys-links') Physical links
-					input.form-control(type='number', id='mpp-phys-links', min=1, step=1, max=10, value=1, required)
+					input.form-control(type='number', id='mpp-phys-links', min=1, step=1, max=1000, value=1, required)
 				.form-group
 					label Duplex connectivity: #{''}
 						input(type='checkbox', id='mpp-duplex', checked)
@@ -112,18 +112,18 @@ body
 					.col-xs-4
 						.form-group
 							label Task Max
-							input.form-control(type='number', id='stat-tasks-max', min=1, step=1, max=100, value=6, required)
+							input.form-control(type='number', id='stat-tasks-max', min=1, step=1, max=100, value=20, required)
 					.col-xs-4
 						.form-group
 							label Task Step
-							input.form-control(type='number', id='stat-tasks-step', min=1, step=1, max=100, value=1, required)
+							input.form-control(type='number', id='stat-tasks-step', min=1, step=1, max=100, value=5, required)
 
 			.col-xs-4
 				.row
 					.col-xs-4
 						.form-group
 							label Connectivity Min
-							input.form-control(type='number', id='stat-conn-min', min=0.01, step=0.01, max=1, value=0.8, required)
+							input.form-control(type='number', id='stat-conn-min', min=0.01, step=0.01, max=1, value=0.1, required)
 					.col-xs-4
 						.form-group
 							label Connectivity Max

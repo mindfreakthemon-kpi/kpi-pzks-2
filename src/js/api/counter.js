@@ -3,8 +3,49 @@ define(['canvasi', 'underscore'], function (canvasi, _) {
 		var elements = canvasi.taskGraph.getElements(),
 			data = [];
 
+		var LINKS_INBOUND_CACHE = new Map();
+		var LINKS_OUTBOUND_CACHE = new Map();
+		var LINKS_CACHE = new Map();
+
+		function getLinks(element, options) {
+			var result;
+
+			options = options || {};
+
+			if (options.inbound) {
+				if (LINKS_INBOUND_CACHE.has(element)) {
+					return LINKS_INBOUND_CACHE.get(element);
+				}
+
+				result = canvasi.taskGraph.getConnectedLinks(element, options);
+			} else if (options.outbound) {
+				if (LINKS_OUTBOUND_CACHE.has(element)) {
+					return LINKS_OUTBOUND_CACHE.get(element);
+				}
+
+				result = canvasi.taskGraph.getConnectedLinks(element, options);
+			} else {
+				if (LINKS_CACHE.has(element)) {
+					return LINKS_CACHE.get(element);
+				}
+
+				result = canvasi.taskGraph.getConnectedLinks(element, options);
+
+			}
+
+			if (options.inbound) {
+				LINKS_INBOUND_CACHE.set(element, result);
+			} else if (options.outbound) {
+				LINKS_OUTBOUND_CACHE.set(element, result);
+			} else {
+				LINKS_CACHE.set(element, result);
+			}
+
+			return result;
+		}
+
 		function _curses(element, options, paths, path) {
-			var links = canvasi.taskGraph.getConnectedLinks(element, options);
+			var links = getLinks(element, options);//canvasi.taskGraph.getConnectedLinks(element, options);
 
 			if (options.inbound && path) {
 				path.push(element);
@@ -109,7 +150,7 @@ define(['canvasi', 'underscore'], function (canvasi, _) {
 		var Nmin = Math.round(Tmin / Tkrgrk);
 
 		_.each(data, function (rec) {
-			var inboundLinks = canvasi.taskGraph.getConnectedLinks(rec.element, { inbound: true });
+			var inboundLinks = getLinks(rec.element, { inbound: true });//canvasi.taskGraph.getConnectedLinks(rec.element, { inbound: true });
 
 			rec.id = rec.element.id;
 
@@ -118,8 +159,8 @@ define(['canvasi', 'underscore'], function (canvasi, _) {
 			rec.Luft = rec.Rsr - rec.Psr;
 
 			rec.Pr = rec.Nkrk / Nkrgrk + rec.Tkrk / Tkrgrk;
-			rec.S = canvasi.taskGraph.getConnectedLinks(rec.element).length;
-			rec.E = canvasi.taskGraph.getConnectedLinks(rec.element, { outbound: true }).length;
+			rec.S = getLinks(rec.element).length;//canvasi.taskGraph.getConnectedLinks(rec.element).length;
+			rec.E = getLinks(rec.element, { outbound: true }).length;//canvasi.taskGraph.getConnectedLinks(rec.element, { outbound: true }).length;
 			rec.I = inboundLinks.length;
 			rec.W = +rec.element.getDescr();
 
@@ -134,7 +175,6 @@ define(['canvasi', 'underscore'], function (canvasi, _) {
 		});
 
 		var Sgr = Math.max.apply(Math, _.pluck(data, 'S'));
-
 
 		return {
 			list: data,
