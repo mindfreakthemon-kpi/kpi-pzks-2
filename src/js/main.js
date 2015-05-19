@@ -11,7 +11,8 @@ require({
 			vectorizer: '../lib-static/vectorizer.min',
 			markdown: '../lib-static/markdown',
 			bootstrap: '../lib/bootstrap/js/bootstrap.min',
-			cpath: '../lib-static/cpath'
+			cpath: '../lib-static/cpath',
+			async: '../lib/async/lib/async'
 		},
 		shim: {
 			bootstrap: {

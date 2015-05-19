@@ -1,4 +1,4 @@
-define(['jquery', 'canvasi', 'templates', 'api/generate', 'api/counter', 'functions/mpp'], function ($, canvasi, templates, generate, counter, mpp) {
+define(['jquery', 'canvasi', 'templates', 'api/generate', 'api/counter', 'functions/mpp', 'async'], function ($, canvasi, templates, generate, counter, mpp, async) {
 	var $stat = $('#stat'),
 		$statBox = $('#stat-box'),
 		$statGen = $('#stat-generate'),
@@ -54,12 +54,14 @@ define(['jquery', 'canvasi', 'templates', 'api/generate', 'api/counter', 'functi
 			TASKS_STEP = parseInt($("#stat-tasks-step").val(), 10);
 
 		var TASKS_RANGE = _.range(TASKS_MIN, TASKS_MAX, TASKS_STEP);
+		TASKS_RANGE.push(TASKS_MAX);
 
 		var CONN_MIN = parseFloat($("#stat-conn-min").val()),
 			CONN_MAX = parseFloat($("#stat-conn-max").val()),
 			CONN_STEP = parseFloat($("#stat-conn-step").val());
 
 		var CONN_RANGE = _.range(CONN_MIN, CONN_MAX, CONN_STEP);
+		CONN_RANGE.push(CONN_MAX);
 
 		var WEIGHT_MIN = parseInt($("#stat-weight-min").val(), 10),
 			WEIGHT_MAX = parseInt($("#stat-weight-max").val(), 10);
@@ -69,7 +71,12 @@ define(['jquery', 'canvasi', 'templates', 'api/generate', 'api/counter', 'functi
 		var TABLE = [],
 			ROWS = [];
 
-		function step(algo, proc, TASK_N, CONN_N) {
+		var I = 0,
+			TOTAL = algoValues.length * procValues.length * TASKS_RANGE.length * CONN_RANGE.length * TIMES;
+
+		$statProgress.attr('max', TOTAL);
+
+		function step(algo, proc, TASK_N, CONN_N, graphs) {
 			setInputChecked($procInputs, proc);
 			setInputChecked($algoInputs, algo);
 
@@ -77,14 +84,9 @@ define(['jquery', 'canvasi', 'templates', 'api/generate', 'api/counter', 'functi
 				E_Ke = 0,
 				E_Kae = 0;
 
-			_.range(TIMES)
-				.forEach(function () {
-					generate.generateGraph(
-						WEIGHT_MIN,
-						WEIGHT_MAX,
-						TASK_N,
-						CONN_N,
-						1);
+			graphs
+				.forEach(function (graph) {
+					canvasi.taskGraph.fromJSON(graph);
 
 					var counts = counter();
 					var results = mpp();
@@ -101,17 +103,38 @@ define(['jquery', 'canvasi', 'templates', 'api/generate', 'api/counter', 'functi
 			TABLE.push([algo, proc, TASK_N, CONN_N, E_Ky / TIMES, E_Ke / TIMES, E_Kae / TIMES]);
 		}
 
+		var _tasks = [];
+
 		algoValues.forEach(function (algo) {
 			procValues.forEach(function (proc) {
 				TASKS_RANGE.forEach(function (TASK_N) {
 					CONN_RANGE.forEach(function (CONN_N) {
-						ROWS.push([algo, proc, TASK_N, CONN_N]);
+
+						_tasks.push(function (callback) {
+							var graphs = [];
+
+							_.range(TIMES)
+								.forEach(function () {
+									$statProgress.attr('value', ++I);
+
+									generate.generateGraph(
+										WEIGHT_MIN,
+										WEIGHT_MAX,
+										TASK_N,
+										CONN_N,
+										1);
+
+									graphs.push(canvasi.taskGraph.toJSON());
+								});
+
+							ROWS.push([algo, proc, TASK_N, CONN_N, graphs]);
+
+							setTimeout(callback.bind(this, null));
+						});
 					});
 				});
 			});
 		});
-
-		$statProgress.attr('max', ROWS.length);
 
 		function curses(i) {
 			$statProgress.attr('value', i + 1);
@@ -133,7 +156,11 @@ define(['jquery', 'canvasi', 'templates', 'api/generate', 'api/counter', 'functi
 			setTimeout(curses.bind(this, i), 0);
 		}
 
-		curses(0);
+		async.series(_tasks, function () {
+			$statProgress.attr('max', ROWS.length);
+
+			curses(0);
+		});
 	}
 
 	$statGen.on('click', iterate);
