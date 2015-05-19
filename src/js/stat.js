@@ -50,6 +50,9 @@ define(['jquery', 'canvasi', 'templates', 'api/generate', 'api/counter', 'api/al
 			return;
 		}
 
+		var duplex = confirm('Allow duplex?');
+		var chan_count = Math.max(1, prompt('Physical links count?', '1') | 0);
+
 		var PROC_COUNT = canvasi.systemGraph.getElements().length;
 
 		$statGen.attr('disabled', 'true');
@@ -109,7 +112,7 @@ define(['jquery', 'canvasi', 'templates', 'api/generate', 'api/counter', 'api/al
 
 									var results = mpp({
 										queue: queue
-									});
+									}, duplex, chan_count);
 
 									var Ky = counts.Tmin / results.states.length,
 										Ke = Ky / PROC_COUNT,
