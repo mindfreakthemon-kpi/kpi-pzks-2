@@ -44,8 +44,8 @@ define(['jquery', 'joint', 'toggles/mode', 'api/storage', 'shapes'], function ($
 	}
 
 	// saving after 0.1 sec of inactivity
-	//taskGraph.on('change add remove', activeSave.bind(null, taskGraph, 'task'));
-	//systemGraph.on('change add remove', activeSave.bind(null, systemGraph, 'system'));
+	taskGraph.on('change add remove', activeSave.bind(null, taskGraph, 'task'));
+	systemGraph.on('change add remove', activeSave.bind(null, systemGraph, 'system'));
 
 	taskPaper.on('cell:pointerdown', bringToFront);
 	systemPaper.on('cell:pointerdown', bringToFront);
