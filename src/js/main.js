@@ -12,7 +12,7 @@ require({
 			markdown: '../lib-static/markdown',
 			bootstrap: '../lib/bootstrap/js/bootstrap.min',
 			cpath: '../lib-static/cpath',
-			async: '../lib/async/lib/async'
+			async: '../lib/async/js/async'
 		},
 		shim: {
 			bootstrap: {
