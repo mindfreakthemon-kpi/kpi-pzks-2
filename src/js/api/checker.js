@@ -41,7 +41,7 @@ define(['canvasi', 'underscore'], function (canvasi, _) {
 
 
 		} catch (e) {
-			alert('ERROR: Got cycle.');
+			alert('WARNING: There is cycle!');
 			return false;
 		}
 
@@ -59,7 +59,7 @@ define(['canvasi', 'underscore'], function (canvasi, _) {
 		})(elements[0]);
 
 		if (elements.length) {
-			alert('ERROR: There is an element without a link.');
+			alert('WARNING: There is hanged vertex.');
 			return false;
 		}
 

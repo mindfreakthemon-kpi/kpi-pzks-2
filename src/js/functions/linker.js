@@ -12,8 +12,9 @@ define(['jquery', 'canvasi', 'toggles/mode', 'underscore'], function ($, canvasi
 				y: y
 			},
 			attrs: {
+                '.connection': { stroke: 'white' },
 				'.marker-target': {
-					d: 'M 10 0 L 0 5 L 10 10 z'
+                    fill: 'white', d: 'M 10 0 L 0 5 L 10 10 z'
 				}
 			}
 		});
@@ -64,8 +65,8 @@ define(['jquery', 'canvasi', 'toggles/mode', 'underscore'], function ($, canvasi
 			_link.label(0, {
 				position: .5,
 				attrs: {
-					rect: { fill: 'white' },
-					text: { fill: 'blue', text: '1' }
+                    rect: { fill: '#2e2e2e' },
+                    text: { fill: 'white', text: '1', 'font-family': 'Consolas', 'font-size': 24 }
 				}
 			});
 

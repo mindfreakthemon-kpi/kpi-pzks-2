@@ -1,160 +1,169 @@
 doctype html
 html
-	head
-		title Main page
-		link(rel='stylesheet', href='lib/bootstrap/css/bootstrap.min.css')
-		link(rel='stylesheet', href='lib/bootstrap/css/bootstrap-theme.min.css')
-		link(rel='stylesheet', href='lib/joint/css/joint.min.css')
-		link(rel='stylesheet', href='css/index.css')
-		script(src='lib/requirejs/js/require.js', data-main='js/main.js')
+    head
+        title Lab 6-7
+        link(rel='stylesheet', href='lib/bootstrap/css/bootstrap.min.css')
+        link(rel='stylesheet', href='lib/bootstrap/css/bootstrap-theme.min.css')
+        link(rel='stylesheet', href='lib/joint/css/joint.min.css')
+        link(rel='stylesheet', href='css/index.css')
+        script(src='lib/requirejs/js/require.js', data-main='js/main.js')
 body
-	#papers
-		.col-xs-6#taskPaper(data-name='task')
-			button.btn.btn-danger.clear(type='button') Clear
-		.col-xs-6#systemPaper(data-name='system')
-			button.btn.btn-danger.clear(type='button') Clear
+    #papers
+        .col-xs-6#taskPaper(data-name='task')
+            button.btn.btn-danger.clear(type='button') Clear
+        .col-xs-6#systemPaper(data-name='system')
+            button.btn.btn-danger.clear(type='button') Clear
 
-	#top-utils
-		#mode.btn-group(data-toggle='buttons')
-			label.btn.btn-default.active
-				input(type='radio', name='mode', value='edit', checked)
-				| Edit
-			label.btn.btn-default
-				input(type='radio', name='mode', value='element')
-				| Add
-			label.btn.btn-default
-				input(type='radio', name='mode', value='link')
-				| Link
-		#proc.btn-group(data-toggle='buttons')
-			label.btn.btn-primary
-				input(type='radio', name='proc', value='1')
-				| 1*
-			//label.btn.btn-primary
-			//	input(type='radio', name='proc', value='2')
-			//	| 2
-			//label.btn.btn-primary
-			//	input(type='radio', name='proc', value='3')
-			//	| 3
-			//label.btn.btn-primary
-			//	input(type='radio', name='proc', value='4')
-			//	| 4
-			label.btn.btn-primary.active
-				input(type='radio', name='proc', value='5', checked)
-				| 5*
-		#algo.btn-group(data-toggle='buttons')
-			//label.btn.btn-primary
-			//	input(name='algo', type='radio', value='1')
-			//	| 1
-			label.btn.btn-primary.active
-				input(name='algo', type='radio', value='2', checked)
-				| 2*
-			//label.btn.btn-primary
-			//	input(name='algo', type='radio', value='3')
-			//	| 3
-			//label.btn.btn-primary
-			//	input(name='algo', type='radio', value='7')
-			//	| 7
-			label.btn.btn-primary
-				input(name='algo', type='radio', value='9')
-				| 9*
-			//label.btn.btn-primary
-			//	input(name='algo', type='radio', value='10')
-			//	| 10
-			label.btn.btn-primary
-				input(name='algo', type='radio', value='11')
-				| 11*
-			//label.btn.btn-primary
-			//	input(name='algo', type='radio', value='16')
-			//	| 16
-			//label.btn.btn-primary
-			//	input(name='algo', type='radio', value='17')
-			//	| 17
-		.btn-group
-			button.btn.btn-primary#check(type='button') Check
-		.btn-group
-			button.btn.btn-info#generate(type='button') Generate
-		.btn-group
-			button.btn.btn-info#mpp(type='button') MPP
-		.btn-group
-			button.btn.btn-info#stat(type='button') STAT
-		.btn-group
-			button.btn.btn-success#save(type='button') Save
-			div(style='position: relative; float: left;')
-				button.btn.btn-primary(type='button') Load
-				input#load(type='file')
-		.btn-group
-			button.btn.btn-danger#clear(type='button') Clear All
+    #top-utils
+        #mode.btn-group(data-toggle='buttons')
+            label.btn.btn-default
+                input(type='radio', name='mode', autocomplete='off', value='element')
+                img(src= 'img/icons/add.png')
+            label.btn.btn-default
+                input(type='radio', name='mode', autocomplete='off', value='link')
+                img(src='img/icons/link.png')
+            label.btn.btn-default.active
+                input(type='radio', name='mode', autocomplete='off', value='edit', checked)
+                img(src='img/icons/edit.png')
+        #proc.btn-group(data-toggle='buttons')
+            //label.btn.btn-primary
+            //    input(type='radio', name='proc', value='1')
+            //    | 1*
+            label.btn.btn-default.active
+                input(type='radio', name='proc', value='2', checked)
+                img(src= 'img/icons/2.png')
+            //label.btn.btn-primary
+            //	input(type='radio', name='proc', value='3')
+            //	| 3
+            label.btn.btn-default
+                input(type='radio', name='proc', value='4')
+                img(src= 'img/icons/4.png')
+            //label.btn.btn-primary.active
+            //    input(type='radio', name='proc', value='5', checked)
+            //    | 5*
+        .btn-group
+            button.btn.btn-default#generate(type='button')
+                img(src= 'img/icons/generate.png')
+            button.btn.btn-default#check(type='button')
+                img(src= 'img/icons/check.png')
+            button.btn.btn-default#clear(type='button')
+                img(src= 'img/icons/clear.png')
+            button.btn.btn-default#save(type='button')
+                img(src= 'img/icons/save.png')
+            button.btn.btn-default(type='button')
+                img(src= 'img/icons/open.png')
+                input#load(type='file')
+        #algo.btn-group(data-toggle='buttons')
+            label.btn.btn-default.active
+                input(name='algo', type='radio', value='1', checked)
+                img(src= 'img/icons/1.png')
+            //label.btn.btn-primary.active
+            //    input(name='algo', type='radio', value='2', checked)
+            //    | 2*
+            //label.btn.btn-primary
+            //	input(name='algo', type='radio', value='3')
+            //	| 3
+            //label.btn.btn-primary
+            //	input(name='algo', type='radio', value='7')
+            //	| 7
+            //label.btn.btn-primary
+            //    input(name='algo', type='radio', value='9')
+            //    | 9*
+            label.btn.btn-default
+                input(name='algo', type='radio', value='10')
+                img(src= 'img/icons/10.png')
+            //label.btn.btn-primary
+            //    input(name='algo', type='radio', value='11')
+            //    | 11*
+            label.btn.btn-default
+                input(name='algo', type='radio', value='16')
+                img(src= 'img/icons/16.png')
+            //label.btn.btn-primary
+            //	input(name='algo', type='radio', value='17')
+            //	| 17
+        .btn-group
+            button.btn.btn-default#mpp(type='button')
+                img(src= 'img/icons/mpp.png')
+        //.btn-group
+        //    button.btn.btn-info#stat(type='button') STAT
+        //.btn-group
+        //    button.btn.btn-success#save(type='button') Save
+        //    div(style='position: relative; float: left;')
+        //        button.btn.btn-primary(type='button') Load
+        //        input#load(type='file')
+        //.btn-group
+        //    button.btn.btn-danger#clear(type='button') Clear All
 
-	#mpp-box
-		.row-fluid
-			.col-xs-10
-				button.btn.btn-large.btn-danger#mpp-generate(type='button') Generate
-			.col-xs-2
-				.form-group
-					label(for='mpp-proc-multi') Processor multiplier
-					input.form-control(type='number', id='mpp-proc-multi', min=0.25, step=0.25, max=8, value=1, required)
-				.form-group
-					label(for='mpp-phys-links') Physical links
-					input.form-control(type='number', id='mpp-phys-links', min=1, step=1, max=1000, value=1, required)
-				.form-group
-					label Duplex connectivity: #{''}
-						input(type='checkbox', id='mpp-duplex', checked)
-		#mpp-inner
+        #mpp-box
+            .row
+                .col-xs-10
+                    button.btn.btn-large.btn-default#mpp-generate(type='button') Generate
+                .col-xs-2
+                    .form-group
+                        label(for='mpp-proc-multi') Processor multiplier
+                        input.form-control(type='number', id='mpp-proc-multi', min=0.25, step=0.25, max=8, value=1, required)
+                    .form-group
+                        label(for='mpp-phys-links') Physical links
+                        input.form-control(type='number', id='mpp-phys-links', min=1, step=1, max=1000, value=1, required)
+                    .form-group
+                        label Duplex connectivity: #{''}
+                            input(type='checkbox', id='mpp-duplex', checked)
+            #mpp-inner
 
-	#stat-box
-		.row-fluid
-			.col-xs-4
-				.row
-					.col-xs-4
-						.form-group
-							label Task Nmin
-							input.form-control(type='number', id='stat-tasks-min', min=1, step=1, max=100, value=5, required)
-					.col-xs-4
-						.form-group
-							label Task Max
-							input.form-control(type='number', id='stat-tasks-max', min=1, step=1, max=100, value=20, required)
-					.col-xs-4
-						.form-group
-							label Task Step
-							input.form-control(type='number', id='stat-tasks-step', min=1, step=1, max=100, value=5, required)
+    //#stat-box
+    //    .row-fluid
+    //        .col-xs-4
+    //            .row
+    //                .col-xs-4
+    //                    .form-group
+    //                        label Task Nmin
+    //                        input.form-control(type='number', id='stat-tasks-min', min=1, step=1, max=100, value=5, required)
+    //                .col-xs-4
+    //                    .form-group
+    //                        label Task Max
+    //                        input.form-control(type='number', id='stat-tasks-max', min=1, step=1, max=100, value=20, required)
+    //                .col-xs-4
+    //                    .form-group
+    //                        label Task Step
+    //                        input.form-control(type='number', id='stat-tasks-step', min=1, step=1, max=100, value=5, required)
+    //
+    //        .col-xs-4
+    //            .row
+    //                .col-xs-4
+    //                    .form-group
+    //                        label Connectivity Min
+    //                        input.form-control(type='number', id='stat-conn-min', min=0.01, step=0.01, max=1, value=0.1, required)
+    //                .col-xs-4
+    //                    .form-group
+    //                        label Connectivity Max
+    //                        input.form-control(type='number', id='stat-conn-max', min=0.01, step=0.01, max=1, value=1, required)
+    //                .col-xs-4
+    //                    .form-group
+    //                        label Connectivity Step
+    //                        input.form-control(type='number', id='stat-conn-step', min=0.01, step=0.01, max=1, value=0.1, required)
+    //
+    //        .col-xs-3
+    //            .row
+    //                .col-xs-6
+    //                    .form-group
+    //                        label Task Weight
+    //                        input.form-control(type='number', id='stat-weight-min', min=1, step=1, max=100, value=1, required)
+    //                .col-xs-6
+    //                    .form-group
+    //                        label Task Weight
+    //                        input.form-control(type='number', id='stat-weight-max', min=1, step=1, max=100, value=10, required)
+    //
+    //        .col-xs-1
+    //            .form-group
+    //                label N
+    //                input.form-control(type='number', id='stat-n', min=1, step=1, max=100, value=10, required)
+    //            .form-group
+    //                button.btn.btn-large.btn-danger#stat-generate(type='button') Generate
+    //
+    //    .row-fluid
+    //        .col-xs-12(style='text-align: center')
+    //            progress#stat-progress(style='width: 100%')
+    //    #stat-inner
 
-			.col-xs-4
-				.row
-					.col-xs-4
-						.form-group
-							label Connectivity Min
-							input.form-control(type='number', id='stat-conn-min', min=0.01, step=0.01, max=1, value=0.1, required)
-					.col-xs-4
-						.form-group
-							label Connectivity Max
-							input.form-control(type='number', id='stat-conn-max', min=0.01, step=0.01, max=1, value=1, required)
-					.col-xs-4
-						.form-group
-							label Connectivity Step
-							input.form-control(type='number', id='stat-conn-step', min=0.01, step=0.01, max=1, value=0.1, required)
-
-			.col-xs-3
-				.row
-					.col-xs-6
-						.form-group
-							label Task Weight
-							input.form-control(type='number', id='stat-weight-min', min=1, step=1, max=100, value=1, required)
-					.col-xs-6
-						.form-group
-							label Task Weight
-							input.form-control(type='number', id='stat-weight-max', min=1, step=1, max=100, value=10, required)
-
-			.col-xs-1
-				.form-group
-					label N
-					input.form-control(type='number', id='stat-n', min=1, step=1, max=100, value=10, required)
-				.form-group
-					button.btn.btn-large.btn-danger#stat-generate(type='button') Generate
-
-		.row-fluid
-			.col-xs-12(style='text-align: center')
-				progress#stat-progress(style='width: 100%')
-		#stat-inner
-
-	#editor
-	#generate-box
+    #editor
+    #generate-box

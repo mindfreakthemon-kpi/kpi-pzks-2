@@ -1,13 +1,13 @@
-.row-fluid
+.row
 	.col-xs-12
 		h4 Task queue
 		pre.code= tasks.map(function (task) { return task.number; }).join(', ')
 
-.row-fluid
+.row
 	.col-xs-12
 		h4 Processor queue
 		pre.code= processors.map(function (task) { return task.number; }).join(', ')
-.row-fluid
+.row
 	.col-xs-4
 		table.table.table-bordered.table-striped.table-hover
 			caption Processors
@@ -57,7 +57,7 @@
 								| &mdash;
 
 if invarianting.length
-	.row-fluid
+	.row
 		.col-xs-12
 			table.table.table-bordered.table-striped.table-hover
 				caption Processor assignments invariants

@@ -10,22 +10,28 @@ sup {
 
 #papers {
 	height: 100%;
-	padding-top: 50px;
-
+	/*padding-top: 50px;*/
+    /*height: 1366px;*/
+    z-index: 1;
+    /*margin: 40px 0;*/
+    border: 1px solid #eee;
+    top: 20px;
+    background: #2e2e2e;
 	.clear {
 		position: absolute;
 		bottom: 0;
-		right: 0;
-
-		border: 2px dashed #eee;
+        left: 0;
+		width: 100%;
+		border: 2px solid #888;
 	}
 }
 
 #taskPaper,
 #systemPaper {
-	height: 100%;
+    top: 70px;
+    height: 100%;
 	z-index: 1;
-	border: 5px dashed #ccc;
+	border: 2px solid #888;
 	position: relative;
 	&:after {
 		content: attr(data-name);
@@ -34,9 +40,10 @@ sup {
 		position: absolute;
 		top: 0;
 		left: 0;
+        color: #ddd;
 		font-size: 30px;
 		font-weight: bold;
-		border: 2px dashed #eee;
+		border: 2px solid #888;
 	}
 }
 
@@ -52,8 +59,8 @@ sup {
 	width: 300px;
 	min-height: 100px;
 	position: absolute;
-	background: #6278ff;
-	top: 70px;
+	background: #afafaf;
+	bottom: 0;
 	right: 0;
 	z-index: 2;
 	padding: 10px 0 0;
@@ -64,15 +71,17 @@ sup {
 	}
 }
 #editor {
-	width: 300px;
-	min-height: 100px;
-	position: absolute;
-	background: #5affcc;
-	top: 20px;
-	right: 0;
-	z-index: 2;
-	display: none;
-	padding: 10px 0 0;
+    top: 70px;
+    right: 0;
+    width: 300px;
+    min-height: 100px;
+    position: absolute;
+    background: #555;
+    color: #ffffff;
+    border 3px solid #ddd;
+    z-index: 2;
+    display: none;
+    padding: 10px 0 0;
 
 	&.shown {
 		display: block;
@@ -103,18 +112,32 @@ sup {
 }
 
 #top-utils {
-	position: absolute;
-	top: 0;
-	left: 0;
-	background: #807752;
-	width: 100%;
-	padding: 10px;
-	text-align: center;
+  top: 0;
+  position: absolute;
+  display : flex;
+  justify-content: left;
+  background: #FFFFFF;
+  width: 100%;
+  padding: 5px 10px;
+  text-align: right;
 
-	.btn-group {
-		margin: 0 5px;
-	}
+  .btn-group {
+    margin: 5px 10px;
+  }
 }
+/*#top-utils {*/
+	/*position: absolute;*/
+	/*top: 0;*/
+	/*left: 0;*/
+	/*background: #807752;*/
+	/*width: 100%;*/
+	/*padding: 10px;*/
+	/*text-align: center;*/
+
+	/*.btn-group {*/
+		/*margin: 0 5px;*/
+	/*}*/
+/*}*/
 
 #load {
 	position: absolute;
@@ -131,11 +154,17 @@ sup {
 	display: none;
 }
 
+#mpp-inner,
+#mpp-box > .row {
+	background: #fff;
+	color: #000;
+}
+
 #stat-box,
 #mpp-box {
 	display: none;
 	position: absolute;
-	top: 60px;
+	top: 70px;
 	left: 0;
 	right: 0;
 	bottom: 0;
@@ -152,4 +181,9 @@ sup {
 svg {
 	height: 100%;
 	width: 100%;
+}
+
+img {
+  width: 36px;
+  height: 36px;
 }

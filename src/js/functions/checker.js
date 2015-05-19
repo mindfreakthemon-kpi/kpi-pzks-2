@@ -8,7 +8,7 @@ define(['jquery', 'canvasi', 'api/checker'], function ($, canvasi, checker) {
 		result &= checker.checkSystem(canvasi.systemGraph.getElements());
 
 		if (result) {
-			alert('ALL IS OK');
+			alert('Everything seems good');
 		}
 	}
 

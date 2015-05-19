@@ -58,13 +58,13 @@ define(['underscore', 'joint', 'canvasi', 'functions/adder'], function (_, joint
 
 		canvasi.taskGraph.clear();
 
-		var P = 3;
+		var P = 4;
 
 		array.forEach(function (weight, index) {
 			var x = index % P + 1,
 				y = Math.floor(index / P);
 
-			cellMap[index] = adder.add(canvasi.taskGraph, ns.Entity, x * 180, 100 + y * 120);
+			cellMap[index] = adder.add(canvasi.taskGraph, ns.Entity, x * 200, 150 + y * 150);
 
 			cellMap[index].setDescr(Math.round(weight));
 		});
@@ -87,8 +87,9 @@ define(['underscore', 'joint', 'canvasi', 'functions/adder'], function (_, joint
 								id: cellMap[i].id
 							},
 							attrs: {
+                                '.connection': { stroke: 'white' },
 								'.marker-target': {
-									d: 'M 10 0 L 0 5 L 10 10 z'
+                                    fill: 'white',d: 'M 10 0 L 0 5 L 10 10 z'
 								}
 							}
 						});
@@ -96,8 +97,8 @@ define(['underscore', 'joint', 'canvasi', 'functions/adder'], function (_, joint
 						link.label(0, {
 							position: .5,
 							attrs: {
-								rect: { fill: 'white' },
-								text: { fill: 'blue', text: map[index][i] }
+                                rect: { fill: '#2e2e2e' },
+                                text: { fill: 'white', text: map[index][i], 'font-family': 'Consolas', 'font-size': 24 }
 							}
 						});
 
