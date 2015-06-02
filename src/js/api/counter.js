@@ -175,6 +175,7 @@ define(['canvasi', 'underscore'], function (canvasi, _) {
 		});
 
 		var Sgr = Math.max.apply(Math, _.pluck(data, 'S'));
+		var Wgr = Math.max.apply(Math, _.pluck(data, 'W'));
 
 		return {
 			list: data,
@@ -183,7 +184,8 @@ define(['canvasi', 'underscore'], function (canvasi, _) {
 			Nkrgrn: Nkrgrn,
 			Tkrgrn: Tkrgrn,
 			Tmin: Tmin,
-			Sgr: Sgr
+			Sgr: Sgr,
+			Wgr: Wgr
 		};
 	};
 });

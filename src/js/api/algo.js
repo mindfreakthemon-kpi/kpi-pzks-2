@@ -9,9 +9,19 @@ define(['api/counter', 'underscore', 'toggles/algo'], function (counter, _, algo
 		3: function (data) {
 			return _.sortBy(data.list, 'Tkrk').reverse();
 		},
+		4: function (data) {
+			return _.sortBy(data.list, function (rec) {
+				return rec.Nkrk + '_' + rec.S;
+			}).reverse();
+		},
 		7: function (data) {
 			return _.sortBy(data.list, function (rec) {
 				return rec.Nkrn + '_' + (data.Sgr - rec.S);
+			});
+		},
+		8: function (data) {
+			return _.sortBy(data.list, function (rec) {
+				return rec.Nkrn + '_' + (data.Wgr - rec.W);
 			});
 		},
 		9: function (data) {
