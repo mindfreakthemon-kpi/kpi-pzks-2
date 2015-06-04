@@ -34,6 +34,17 @@ define(['underscore', 'canvasi', 'toggles/proc', 'functions/cpath'], function (_
 				.value();
 		},
 		2: function (data, taskId) {
+			if (!data.STATES.length) {
+				return _.chain(data.PROCESSOR_QUEUE)
+					// only free
+					.filter(function (processor) {
+						return isFree(data, taskId, processor.id);
+					})
+					.map(_.iteratee('id'))
+					.first()
+					.value();
+			}
+
 			return _.chain(data.PROCESSOR_QUEUE)
 				// sort by passive counter in asc
 				.sortBy(function (processor) {

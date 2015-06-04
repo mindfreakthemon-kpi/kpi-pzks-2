@@ -221,7 +221,8 @@ define(['jquery', 'underscore', 'canvasi', 'functions/cpath', 'api/proc'], funct
 				SYSTEM_MATRIX: SYSTEM_MATRIX,
 				INVARIANTING_ARRAY: INVARIANTING_ARRAY,
 				TASK_QUEUE: TASK_QUEUE,
-				LINK_QUEUE: LINK_QUEUE
+				LINK_QUEUE: LINK_QUEUE,
+				STATES: STATES
 			}, taskId);
 
 			if (processorId !== undefined) {
@@ -409,7 +410,7 @@ define(['jquery', 'underscore', 'canvasi', 'functions/cpath', 'api/proc'], funct
 					let taskId = link.target;
 
 					// proc
-					if (proc.mode() === '4') {
+					if (proc.mode() === '4' || proc.mode() === '2') {
 						// check if all parent tasks were finished
 						// and proceed only after that
 
